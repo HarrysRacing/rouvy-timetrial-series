@@ -3500,7 +3500,10 @@ input, select, textarea {
 				#intro .actions {
 					display: none;
 				}
-
+.intro-logo {
+	width: 120px;
+	margin-bottom: 1rem;
+}
 		}
 
 /* Header */
