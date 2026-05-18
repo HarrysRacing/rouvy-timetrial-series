@@ -3311,7 +3311,7 @@ input, select, textarea {
 		text-align: center;
 		z-index: 1;
 		min-height: 100vh;
-		background-image: url("../images/rouvyracing.jpg");
+		background-image: url("../../images/rouvyracing.jpg");
 		background-size: cover;
 		background-position: center;
 	}
