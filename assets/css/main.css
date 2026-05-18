@@ -3311,10 +3311,20 @@ input, select, textarea {
 		text-align: center;
 		z-index: 1;
 		min-height: 100vh;
-		background-image: url("../../images/rouvyracing.jpg");
+		background-image: url("../images/rouvyracing.jpg");
 		background-size: cover;
 		background-position: center;
 	}
+#intro:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.45);
+	z-index: -1;
+}
 
 		#intro input, #intro select, #intro textarea {
 			color: #ffffff;
