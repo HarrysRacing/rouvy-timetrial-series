@@ -3500,10 +3500,6 @@ input, select, textarea {
 				#intro .actions {
 					display: none;
 				}
-.intro-logo {
-	width: 120px;
-	margin-bottom: 1rem;
-}
 		}
 
 /* Header */
@@ -3616,7 +3612,12 @@ input, select, textarea {
 					font-size: 1.75rem;
 					border-width: 3px !important;
 				}
-
+#header {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 0;
+}
 		}
 
 /* Nav */
@@ -4703,3 +4704,30 @@ input, select, textarea {
 		}
 
 	}
+.site-branding {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 1.25rem;
+	width: 100%;
+	padding: 1rem 2rem;
+}
+
+.site-logo {
+	width: 90px;
+	height: 90px;
+	object-fit: contain;
+}
+
+.site-title h1 {
+	margin: 0;
+	font-size: 2rem;
+	letter-spacing: 0.08em;
+	color: #ffffff;
+}
+
+.site-title p {
+	margin: 0.2rem 0 0 0;
+	font-size: 0.9rem;
+	color: rgba(255,255,255,0.75);
+}
