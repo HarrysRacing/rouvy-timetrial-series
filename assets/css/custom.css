@@ -2,6 +2,7 @@
 	background-image: url("../images/rouvyracing.jpg");
 	background-size: cover;
 	background-position: center;
+	padding-top: 8rem !important;
 }
 
 #intro:before {
@@ -63,10 +64,6 @@
 	
 	opacity: 1 !important;
 	visibility: visible !important;
-}
-
-#intro {
-	padding-top: 8rem !important;
 }
 
 body.is-preload #header {
