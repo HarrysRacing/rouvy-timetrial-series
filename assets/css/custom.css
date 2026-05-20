@@ -27,6 +27,12 @@
 	padding: 1rem 2rem;
 }
 
+.site-logo {
+	width: 95px;
+	height:95px;
+	object-fit: contain;
+}
+
 #header .site-logo {
 	width: 95px;
 	height:95px;
