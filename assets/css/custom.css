@@ -33,20 +33,23 @@
 	object-fit: contain;
 }
 
-#hedaer .site-title h1 {
+#header .site-title h1 {
 	margin: 0;
 	font-size: 2rem;
 	letter-spacing: 0.08em;
 	color: #ffffff;
 }
 
-#hedaer .site-title p {
+#header .site-title p {
 	margin: 0.2rem 0 0 0;
 	font-size: 0.9rem;
 	color: rgba(255,255,255,0.75);
 }
 
-
+/* custom.css loaded after main.css */
+.post {
+  padding: 4rem 4rem 4rem 4rem;
+}
 
 
 
