@@ -48,7 +48,7 @@
 
 /* custom.css loaded after main.css */
 section .post {
-  padding: 2rem 4rem 4rem 4rem;
+  padding: 2rem 4rem 4rem 4rem !important;
 }
 
 
