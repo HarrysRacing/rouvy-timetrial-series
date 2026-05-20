@@ -54,9 +54,9 @@
 
 .logo-title img {
   float: left;
-  width: 100px;
-  height: 100px;
-  background: #555;
+  width: 95px;
+  height: 95px;
+  /* background: #555; */
 }
 
 .logo-title h1 {
