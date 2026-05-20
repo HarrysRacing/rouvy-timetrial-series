@@ -1,4 +1,4 @@
-/*
+
 #intro {
 	background-image: url("../images/rouvyracing.jpg");
 	background-size: cover;
@@ -17,7 +17,7 @@
 	background: rgba(0,0,0,0.45);
 	z-index: -1;
 }
-*/
+
 .site-branding {
 	display: flex;
 	align-items: center;
