@@ -17,7 +17,7 @@
 	background: rgba(0,0,0,0.45);
 	z-index: -1;
 }
-
+*/
 .site-branding {
 	display: flex;
 	align-items: center;
@@ -26,7 +26,7 @@
 	width: 100%;
 	padding: 1rem 2rem;
 }
-*/
+
 .site-logo {
 	width: 90px;
 	height:90px;
@@ -46,7 +46,7 @@
 	color: rgba(255,255,255,0.75);
 }
 
-
+/*
 #header {
 	position: fixed;
 	top: 0;
@@ -72,7 +72,7 @@ body.is-preload #header {
 	opacity: 1 !important;
 }
 
-
+*/
 
 
 
