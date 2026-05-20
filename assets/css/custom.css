@@ -21,21 +21,18 @@
 .site-branding {
 	display: flex;
 	align-items: center;
-	justify-content: flex-start;
-	gap: 1.25rem;
-	width: 100%;
-	padding: 1rem 2rem;
+	gap: 1rem;
 }
 
 .site-logo {
-	width: 90px;
-	height:90px;
+	width: 100px;
+	height:100px;
 	object-fit: contain;
 }
 
 .site-title h1 {
 	margin: 0;
-	font-size: 2rem;
+	font-size: 1.5rem;
 	letter-spacing: 0.08em;
 	color: #ffffff;
 }
@@ -44,34 +41,6 @@
 	margin: 0.2rem 0 0 0;
 	font-size: 0.9rem;
 	color: rgba(255,255,255,0.75);
-}
-
-/*
-#header {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	
-	z-index: 20000;
-
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-
-	padding: 0.5rem 1.5rem;
-
-	background: rgba(0, 0, 0, 0.75);
-	backdrop-filter: blur(4px);
-	
-	opacity: 1 !important;
-	visibility: visible !important;
-}
-
-*/
-
-body.is-preload #header {
-	opacity: 1 !important;
 }
 
 
