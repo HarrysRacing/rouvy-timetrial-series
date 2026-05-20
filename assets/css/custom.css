@@ -22,7 +22,9 @@
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
-	gap: 1rem;
+	gap: 1.25rem;
+	width: 100%;
+	padding: 1rem 2rem;
 }
 
 .site-logo {
@@ -33,7 +35,7 @@
 
 .site-title h1 {
 	margin: 0;
-	font-size: 1.5rem;
+	font-size: 2rem;
 	letter-spacing: 0.08em;
 	color: #ffffff;
 }
