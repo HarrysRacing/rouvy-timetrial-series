@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- Massively CSS -->
-  <link rel="stylesheet" href="assets/css/main.css" />
-  <link rel="stylesheet" href="assets/css/custom.css" />
-  <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}"  />
+  <noscript><link rel="stylesheet" href="{{ url_for('static', filename='css/noscript.css') }}" /></noscript>
 </head>
 
 <body class="is-preload">
@@ -30,7 +30,7 @@
 
   <div class="site-branding">
 
-    <img src="assets/images/HR Logo.png"
+    <img src="{{ url_for('static', filename='images/HR logo.png') }}" 
          alt="Harrys Racing Logo"
          class="site-logo" />
 
@@ -46,11 +46,11 @@
     <!-- Nav -->
     <nav id="nav">
       <ul class="links">
-        <li class="active"><a href="index.html">Home</a></li>
-        <li><a href="guide.html">Guidelines</a></li>		
-        <li><a href="terms.html">Terms</a></li>
-        <li><a href="privacy.html">Privacy</a></li>
-		<li><a href="about.html">About</a></li>
+        <li class="active"><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('guide') }}">Guidelines</a></li>
+        <li><a href="{{ url_for('terms') }}">Terms</a></li>
+        <li><a href="{{ url_for('privacy') }}">Privacy</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
       </ul>
     </nav>
 
@@ -134,8 +134,8 @@
         </p>
 
         <ul class="actions">
-          <li><a href="terms.html" class="button">Terms of Service</a></li>
-          <li><a href="privacy.html" class="button">Privacy Policy</a></li>
+		  <li><a href="{{ url_for('terms') }}" class="button">Terms of Service</a></li>
+		  <li><a href="{{ url_for('privacy') }}" class="button">Privacy Policy</a></li>
         </ul>
       </section>
 
@@ -160,19 +160,19 @@
 
     <!-- Copyright -->
     <div id="copyright">
-      <ul><li>&copy; Race Series</li></ul>
+      <ul><li>&copy; Harrys Race Series</li></ul>
     </div>
 
   </div>
 
   <!-- Scripts -->
-  <script src="assets/js/jquery.min.js"></script>
-  <script src="assets/js/jquery.scrollex.min.js"></script>
-  <script src="assets/js/jquery.scrolly.min.js"></script>
-  <script src="assets/js/browser.min.js"></script>
-  <script src="assets/js/breakpoints.min.js"></script>
-  <script src="assets/js/util.js"></script>
-  <script src="assets/js/main.js"></script>
-
+  <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.scrollex.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.scrolly.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/browser.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/breakpoints.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/util.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+ 
 </body>
 </html>

@@ -6,8 +6,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Guidelines</title>
-  <link rel="stylesheet" href="assets/css/main.css" />
-  <link rel="stylesheet" href="assets/css/custom.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}"  />
 </head>
 
 
@@ -20,7 +20,7 @@
       <section class="post">
 
        <div class="logo-title">
-    <img src="assets/images/HR Logo.png"
+    <img src="{{ url_for('static', filename='images/HR logo.png') }}" 
          alt="Harrys Racing Logo"/>
 
           <h1>Guidelines</h1>
@@ -182,16 +182,16 @@
 </body>
 </html>
 
-    <p style="color: blue;"><strong><a href="index.html">Back to home</a></strong></p>
+    <p style="color: blue;"><strong><a href="{{ url_for('home') }}">Home</a></strong></p>
       </section>
     </div>
   </div>
 
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/browser.min.js"></script>
-<script src="assets/js/breakpoints.min.js"></script>
-<script src="assets/js/util.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/browser.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/breakpoints.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/util.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
  
 </body>
 </html>
