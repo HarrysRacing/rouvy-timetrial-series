@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 
 try:
     # Connect to SQLite Database and create a cursor
-    dbConnection = sqlite3.connect(r'C:\Users\Harry\Documents\Updated Docs to Sync\Cycling\HarrysRacing\Database\harrysracing.db')
+    dbConnection = sqlite3.connect(r'C:\Users\Harry\Documents\Updated Docs to Sync\Cycling\HarrysRacing\GitHub\rouvy-timetrial-series\database\harrysracing.db')
     cursor = dbConnection.cursor()
     print('Connected to harrysracing.db')
 

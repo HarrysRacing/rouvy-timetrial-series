@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <title>ROUVY Time Trial Racing Series | Results and Standings</title>
+  <title>Harrys Racing Series</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -20,7 +20,7 @@
      
     <div id="intro">
       <ul class="actions">
-        <li><a href="#main" class="button icon solid solo fa-arrow-down scrolly">View Results</a></li>
+        <li><a href="#main" class="button icon solid solo fa-arrow-down scrolly">Scroll Down</a></li>
       </ul>
     </div>
 
@@ -30,12 +30,12 @@
 
   <div class="site-branding">
 
-    <img src="{{ url_for('static', filename='images/HR logo.png') }}" 
+    <img src="{{ url_for('static', filename='images/HRlogo.png') }}" 
          alt="Harrys Racing Logo"
          class="site-logo" />
 
     <div class="site-title">
-      <h1>Harry's Time Trial Racing Series</h1>
+      <h1>Harrys Racing Series</h1>
       <p>Community Indoor Cycling Competition</p>
     </div>
 
@@ -60,83 +60,92 @@
       <!-- About -->
       <section class="post">
         <header class="major">
-          <h2>About this project</h2>
-          <p>
-            An independent community race series using data from the ROUVY platform
-            to aggregate event results and compute standings.
-          </p>
-        </header>
-
-        <p>
-          This site publishes race event details, schedules, participants,
-          and results for a structured indoor cycling series.
-        </p>
-
-        <p>
-          It is not affiliated with ROUVY and operates as a community-driven initiative.
-        </p>
-      </section>
-
-      <!-- What it does -->
-      <section class="post">
-        <header class="major">
-          <h2>What this site does</h2>
-        </header>
-
+          <h3>Current Race Series</h3>
+		  
+		  <h2>{{ name }}</h2>
+		</header>
+		
         <ul>
-          <li>Displays race event details, schedules, and participants</li>
-          <li>Displays race event results and standings</li>
-          <li>Aggregates results across a race series</li>
-          <li>Provides transparent ranking updates</li>
-        </ul>
-      </section>
+		   <li><i><strong>{{name}}</strong></i> runs from <b>{{start_date}}</b> until <b>{{end_date}}</b>.</li>
+		   <li><b>The best {{counting_stages}} stages raced</b> will be awarded points that count towards the overall General Classification.</li>
+		   <li>The points awarded for Stage rankings, for the current series, can be found in the <i><b><a href="{{ url_for('points') }}">Points Table</a></b></i></li>
+		</ul>
+	    <p>For an explanation of how Harrys Racing Series works, please refer to the <i><b><a href="{{ url_for('guide') }}">Guidelines</a></b></i>.<br></p> 
+		
 
-      <!-- Events placeholder -->
       <section class="posts">
-
         <article>
           <header>
-            <h2>Upcoming Events</h2>
+            <h3>Stages</h3>
           </header>
           <p>
-            Race calendar and startlists will appear here once events are loaded via the ROUVY API.
+            <i><strong>{{name}}</strong></i> consists of the following Stages:
           </p>
+          <table>
+	      <tr>
+             <th>Stage Name</th>
+             <th>ROUVY Route</th>
+			 <th>Start Date</th>
+			 <th>End Date</th>
+		     <th>Location</th>
+		     <th>Distance(kms)</th>
+		     <th>Ascent(m)</th>
+          </tr>
+          {% for item in stage_tbl %}  
+          <tr>
+             <td>{{item[0]}}</td>
+             <td>{{item[1]}}</td>
+	         <td>{{item[2]}}</td>       
+	         <td>{{item[3]}}</td>       
+	         <td>{{item[4]}}</td>
+	         <td>{{item[5]}}</td>       
+	         <td>{{item[6]}}</td>
+          </tr>
+          {% endfor %}
+	      </table><br>
         </article>
-
+		
         <article>
           <header>
-            <h2>Latest Results</h2>
+            <h3>GC Standings</h3>
           </header>
           <p>
-            Race results and standings will be published here after each event completes.
+            Current Top Ten GC Standings (where available) :
           </p>
+		  <table>
+	      <tr>
+             <th>GC Position</th>
+			 <th>Rider</th>
+			 <th>Gender</th>
+		     <th>Nationality</th>
+		     <th>Age Group</th>
+		     <th>Counting Stages</th>
+			 <th>Points</th>
+          </tr>
+          {% for item in gc_tbl %}  
+          <tr>
+             <td>{{item[0]}}</td>
+             <td>{{item[1]}}</td>
+	         <td>{{item[2]}}</td>       
+	         <td>{{item[3]}}</td>       
+	         <td>{{item[4]}}</td>
+	         <td>{{item[5]}}</td>       
+	         <td>{{item[6]}}</td>
+          </tr>
+          {% endfor %}
+	      </table><br>
         </article>
 
-        <article>
-          <header>
-            <h2>Series Standings</h2>
-          </header>
-          <p>
-            Overall rankings across all events in the race series.
-          </p>
+        <article>		
+		  <ul class="actions">
+		     <li><a href="{{ url_for('terms') }}" class="button">Current GC (Full)</a></li>
+		     <li><a href="{{ url_for('terms') }}" class="button">Stage Results</a></li>
+		     <li><a href="{{ url_for('terms') }}" class="button">Upcoming Races</a></li>
+             <li><a href="{{ url_for('terms') }}" class="button">Participants</a></li>
+		     <li><a href="{{ url_for('register') }}" class="button">Rider Registration</a></li>
+          </ul>
         </article>
 
-      </section>
-
-      <!-- Legal -->
-      <section class="post">
-        <header class="major">
-          <h2>Legal & Transparency</h2>
-        </header>
-
-        <p>
-          This is an independent community project and is not affiliated with ROUVY.
-        </p>
-
-        <ul class="actions">
-		  <li><a href="{{ url_for('terms') }}" class="button">Terms of Service</a></li>
-		  <li><a href="{{ url_for('privacy') }}" class="button">Privacy Policy</a></li>
-        </ul>
       </section>
 
     </div>
@@ -144,23 +153,27 @@
     <!-- Footer -->
     <footer id="footer">
       <section>
-        <h3>Contact</h3>
-        <p>
-          Community race series project. Contact via repository or published contact details.
+        <h3>Legal</h3>
+        <p style="text-align: left;">
+          Harrys Racing Series is an independent community project
+		  requiring participant registration
+		  and utilizing data accessed via the ROUVY API.
         </p>
       </section>
-
+	  
       <section>
-        <h3>Legal</h3>
-        <p>
-          Independent project using ROUVY API data.
+        <h3>Contact</h3>
+        <p style="text-align: left;">
+          For project enquiries
+		  please contact <i>TheWebMaster</i> at:<br> 
+          harrysracing@altmail.kr
         </p>
       </section>
     </footer>
 
     <!-- Copyright -->
     <div id="copyright">
-      <ul><li>&copy; Harrys Race Series</li></ul>
+      <ul><li>&copy; Harrys Racing Series</li></ul>
     </div>
 
   </div>

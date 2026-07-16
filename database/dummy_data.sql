@@ -2,12 +2,13 @@ DELETE FROM Series;
 
 INSERT INTO Series (	
   Name,
-  StartDate, -- 'YYYY-MM-DD HH:MM:SS'
-  EndDate, -- 'YYYY-MM-DD HH:MM:SS'
+  StartDate, -- ISO8601: 'YYYY-MM-DDTHH:MM:SSZ'
+  EndDate, -- ISO8601: 'YYYY-MM-DDTHH:MM:SSZ'
   CountingStages -- number of Stages that count towards GC
   )
 VALUES
-  ('Harrys Dummy Race Series','2026-05-01 00:00:01','2026-08-03 23:59:59',2);
+  ('Harrys First Race Series','2026-05-01T00:00:01Z','2026-08-03T23:59:59Z',2),
+  ('Harrys Next Race Series','2026-10-01T00:00:01Z','2026-12-03T23:59:59Z',5);
 
 DELETE FROM Stage;
   
@@ -16,43 +17,42 @@ INSERT INTO Stage (
   Name,
   RouteId, -- FK to ROUVY Route infomation accessed via API
   RouteName, -- pulled from ROUVY API
-  StartDate,
-  EndDate
+  Country, -- pulled from ROUVY API
+  Distance, -- pulled from ROUVY API
+  Ascent, -- pulled from ROUVY API
+  MaxSlope, -- pulled from ROUVY API
+  StartDate, -- ISO8601: 'YYYY-MM-DDTHH:MM:SSZ'
+  EndDate -- ISO8601: 'YYYY-MM-DDTHH:MM:SSZ'
   )
 VALUES
-  (1,'HR Stage 1 Dummy','81141','Bormio to Tirano | Italy','2026-05-01 00:00:01','2026-05-31 11:00:00'),
-  (1,'HR Stage 2 Dummy','297637','Santo Stefano to Sant Ambrogio | Sicily','2026-06-01 00:00:01','2026-06-30 23:59:59'),
-  (1,'HR Stage 3 Dummy','252521','Los Gigantes | Tenerife','2026-07-01 00:00:01','2026-07-04 20:00:59'),
-  (1,'HR Stage 4 Dummy','252145','Pampas | Bolivia','2026-08-01 00:00:01','2026-08-31 23:59:59');
+  (1,'HR S1 Stage 1','81141','Bormio to Tirano | Italy','Italy',16.0,364.7,15.2,'2026-05-01T00:00:01Z','2026-05-31T11:00:00Z'),
+  (1,'HR S1 Stage 2','297637','Santo Stefano to Sant Ambrogio | Sicily','Sicily',17.1,264.7,7.1,'2026-06-01T00:00:01Z','2026-06-30T23:59:59Z'),
+  (1,'HR S1 Stage 3','252521','Los Gigantes | Tenerife','Spain',14.9,64.3,2.2,'2026-07-01T00:00:01Z','2026-07-04T20:00:59Z'),
+  (1,'HR S1 Stage 4','252145','Pampas | Bolivia','Bolivia',22.5,564.7,9.1,'2026-08-01T00:00:01Z','2026-08-31T23:59:59Z');
  
  DELETE FROM Race;
 
 INSERT INTO Race (	
   StageId, -- FK to Stage table
   EventId, -- FK to ROUVY Event infomation accessed via API
-  StartTime, -- Date & Time for Race start
-  Name,
-  Country,
-  Distance,
-  Ascent,
-  MaxSlope
+  StartTime, -- Date & Time for Race start - ISO8601: 'YYYY-MM-DDTHH:MM:SSZ'
+  Name -- pulled from ROUVY API
   )
 VALUES
-  (1,'bfff5371-dd90-4d64-b39f-7eb6bf0709b4','2026-05-10 19:00:00','Stage 1 Race 1','Italy',16.0,364.7,15.2),
-  (1,'bfff5371-dd90-4d64-b39f-7eb6bf0709b5','2026-05-15 06:00:00','Stage 1 Race 2','Italy',16.0,364.7,15.2),
-  (1,'bfff5371-dd90-4d64-b39f-7eb6bf0709b6','2026-05-20 11:00:00','Stage 1 Race 3','Italy',16.0,364.7,15.2),
-  (2,'cfff5371-dd90-4d64-b39f-7eb6bf0709b4','2026-06-10 05:00:00','Stage 2 Race 1','Sicily',17.1,264.7,7.1),
-  (2,'cfff5371-dd90-4d64-b39f-7eb6bf0709b5','2026-06-15 15:30:00','Stage 2 Race 2','Sicily',17.1,264.7,7.1),
-  (2,'cfff5371-dd90-4d64-b39f-7eb6bf0709b6','2026-06-20 21:00:00','Stage 2 Race 3','Sicily',17.1,264.7,7.1),
-  (2,'cfff5371-dd90-4d64-b39f-7eb6bf0709b7','2026-06-25 12:00:00','Stage 2 Race 4','Sicily',17.1,264.7,7.1),
-  (3,'dfff5371-dd90-4d64-b39f-7eb6bf0709b4','2026-07-01 19:00:00','Stage 3 Race 1','Spain',14.9,64.3,2.2),
-  (3,'dfff5371-dd90-4d64-b39f-7eb6bf0709b5','2026-07-03 06:00:00','Stage 3 Race 2','Spain',14.9,64.3,2.2),
-  (3,'dfff5371-dd90-4d64-b39f-7eb6bf0709b6','2026-07-04 11:00:00','Stage 3 Race 3','Spain',14.9,64.3,2.2),
-  (4,'efff5371-dd90-4d64-b39f-7eb6bf0709b4','2026-08-10 05:00:00','Stage 4 Race 1','Bolivia',22.5,564.7,9.1),
-  (4,'efff5371-dd90-4d64-b39f-7eb6bf0709b5','2026-08-15 15:30:00','Stage 4 Race 2','Bolivia',22.5,564.7,9.1),
-  (4,'efff5371-dd90-4d64-b39f-7eb6bf0709b6','2026-08-20 21:00:00','Stage 4 Race 3','Bolivia',22.5,564.7,9.1),
-  (4,'efff5371-dd90-4d64-b39f-7eb6bf0709b7','2026-08-25 12:00:00','Stage 4 Race 4','Bolivia',22.5,564.7,9.1);
-
+  (1,'bfff5371-dd90-4d64-b39f-7eb6bf0709b4','2026-05-10T19:00:00Z','Stage 1 Race 1'),
+  (1,'bfff5371-dd90-4d64-b39f-7eb6bf0709b5','2026-05-15T06:00:00Z','Stage 1 Race 2'),
+  (1,'bfff5371-dd90-4d64-b39f-7eb6bf0709b6','2026-05-20T11:00:00Z','Stage 1 Race 3'),
+  (2,'cfff5371-dd90-4d64-b39f-7eb6bf0709b4','2026-06-10T05:00:00Z','Stage 2 Race 1'),
+  (2,'cfff5371-dd90-4d64-b39f-7eb6bf0709b5','2026-06-15T15:30:00Z','Stage 2 Race 2'),
+  (2,'cfff5371-dd90-4d64-b39f-7eb6bf0709b6','2026-06-20T21:00:00Z','Stage 2 Race 3'),
+  (2,'cfff5371-dd90-4d64-b39f-7eb6bf0709b7','2026-06-25T12:00:00Z','Stage 2 Race 4'),
+  (3,'dfff5371-dd90-4d64-b39f-7eb6bf0709b4','2026-07-01T19:00:00Z','Stage 3 Race 1'),
+  (3,'dfff5371-dd90-4d64-b39f-7eb6bf0709b5','2026-07-03T06:00:00Z','Stage 3 Race 2'),
+  (3,'dfff5371-dd90-4d64-b39f-7eb6bf0709b6','2026-07-04T11:00:00Z','Stage 3 Race 3'),
+  (4,'efff5371-dd90-4d64-b39f-7eb6bf0709b4','2026-08-10T05:00:00Z','Stage 4 Race 1'),
+  (4,'efff5371-dd90-4d64-b39f-7eb6bf0709b5','2026-08-15T15:30:00Z','Stage 4 Race 2'),
+  (4,'efff5371-dd90-4d64-b39f-7eb6bf0709b6','2026-08-20T21:00:00Z','Stage 4 Race 3'),
+  (4,'efff5371-dd90-4d64-b39f-7eb6bf0709b7','2026-08-25T12:00:00Z','Stage 4 Race 4');
 
 DELETE FROM Rider;
 
@@ -67,16 +67,16 @@ INSERT INTO Rider (
   )
 VALUES 
   ('616e77e23b291ca7ebb5c989','Old-Harry',8,'male','CA',59.42055199999999,212),
-  ('616e77e23b291ca7ebb5c990','Rider 2',5,'male','FR',47.6750,186),
-  ('616e77e23b291ca7ebb5c991','Rider 3',2,'female','CH',77.7,286),
-  ('616e77e23b291ca7ebb5c992','Rider 4',4,'female','BE',97.4,386),
-  ('616e77e23b291ca7ebb5c993','Rider 5',1,'male','AU',67.89,206),
-  ('616e77e23b291ca7ebb5c994','Rider 6',5,'male','CA',81.45,265),
-  ('616e77e23b291ca7ebb5c995','Rider 7',7,'female','ES',64.78,236),
-  ('616e77e23b291ca7ebb5c996','Rider 8',7,'male','FR',75.78,246),
-  ('616e77e23b291ca7ebb5c997','Rider 9',8,'male','NZ',81.0,226),
-  ('616e77e23b291ca7ebb5c998','Rider 10',4,'male','BE',71.23,196),
-  ('616e77e23b291ca7ebb5c999','Rider 11',6,'male','CH',69.18,252);
+  ('616e77e23b291ca7ebb5c990','TheFishTail',5,'male','FR',47.6750,186),
+  ('616e77e23b291ca7ebb5c991','Coffee Bean',2,'female','CH',77.7,286),
+  ('616e77e23b291ca7ebb5c992','Krank',4,'female','BE',97.4,386),
+  ('616e77e23b291ca7ebb5c993','Franko',1,'male','AU',67.89,206),
+  ('616e77e23b291ca7ebb5c994','Samuel Maddox',5,'male','CA',81.45,265),
+  ('616e77e23b291ca7ebb5c995','FasterThanU',7,'female','ES',64.78,236),
+  ('616e77e23b291ca7ebb5c996','Slugger',7,'male','FR',75.78,246),
+  ('616e77e23b291ca7ebb5c997','Ms. Pritte',8,'male','NZ',81.0,226),
+  ('616e77e23b291ca7ebb5c998','Mud-Slinger',4,'male','BE',71.23,196),
+  ('616e77e23b291ca7ebb5c999','Geoff1973',6,'male','CH',69.18,252);
 
 DELETE FROM Participant;
 
