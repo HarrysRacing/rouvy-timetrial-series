@@ -65,5 +65,33 @@
   left: 10px;
 }
 
+.registration-screenshot {
+    display: block;
+    max-width: 700px;
+    margin: 0 auto;
+}
 
+.registration-screenshot img {
+    width: 100%;
+    height: auto;
+}
 
+.registration-action {
+    text-align: center;
+}
+
+.registration-button {
+    display: inline-block;
+    background-color: #f2d74c;
+    color: #000080 !important;
+    border-radius: 99px;
+    padding: 0.8rem 2.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: none;
+}
+
+.registration-button:hover {
+    background-color: #e5b93f;
+    color: #000080 !important;
+}

@@ -30,23 +30,71 @@
     <br><p><strong>Registration simply connects your ROUVY account to Harrys Racing Series so that your rides can be included in race standings.</strong></p>
 
     <ul>
-       <li>To register for Harrys Racing Series you must be an active subscriber to the ROUVY indoor cycling platform.</li>
+       <li>To register for Harrys Racing Series <b><i>you must be an active subscriber to the ROUVY indoor cycling platform.</b></i></li>
 
-       <li>Registration is completed securely through ROUVY. </li>
+       <li>Registration is completed <b><i>securely through ROUVY</b></i>. </li>
 	   
-	   <li>By selecting the registration link below, you will be redirected to ROUVY to authenticate your account and authorize Harry's Racing Series access.</li>
+	   <li>By selecting the registration link below, you will be <b></i>redirected to ROUVY to authenticate your account</b></i> and authorize Harry's Racing Series access.</li>
 
-       <li>Harrys Racing Series does not receive or store your ROUVY login credentials, including your password. Authentication is performed entirely by ROUVY.</li>
+       <li><b><i>Harrys Racing Series does not receive or store your ROUVY login credentials</b></i>, including your password. Authentication is performed entirely by ROUVY.</li>
 
-       <li>Following successful authorization, your ROUVY profile and relevant activity data may be accessed through the ROUVY API solely for the purpose of managing race participation, calculating results, and displaying standings.</li>
+       <li>Following successful authorization, your ROUVY profile and relevant activity data may be accessed through the ROUVY API <b><i>solely for the purpose of managing race participation, calculating results, and displaying standings.</b></i></li>
 
        <li>Further details regarding the Harrys Racing Series Terms and Conditions and Privacy Policy are available via the links on the <i><b><a href="{{ url_for('index') }}">Home page</a></b></i>.</li>
    </ul>
 </section>
     
+<section>
+    <br><p><strong>The process of Registration for Harrys Racing Series is as follows:</strong></p>
 
+    <ol>
+       <li><strong>Initiate Registration:</strong> Click the "Register" button below.</li>
 
-    <p><a href="{{ url_for('home') }}">Home</a></p>
+       <li><strong>Login to ROUVY:</strong> The ROUVY Login screen will be displayed, as below (unless you are already logged in on your browser, if so go to Step 4.)</li><br>
+	   
+	   <a href="{{ url_for('static', filename='images/Rouvy-login1.png') }}"
+          target="_blank"
+          class="registration-screenshot">
+
+         <img src="{{ url_for('static', filename='images/Rouvy-login1.png') }}"
+            alt="ROUVY login page">
+       </a>
+	   <br>
+	   <li><strong> Complete ROUVY Login:</strong> The ROUVY password screen will be displayed. To complete your login, please enter your password.
+	       <br><strong>*** Please note : your email and password are secure. This login process is performed by the ROUVY application. 
+		           At no time does Harrys Racing have access to your sensitive information. *** </strong> </li><br>
+
+	   <a href="{{ url_for('static', filename='images/Rouvy-login2.png') }}"
+          target="_blank"
+          class="registration-screenshot">
+
+         <img src="{{ url_for('static', filename='images/Rouvy-login2.png') }}"
+            alt="ROUVY login password page">
+       </a><br>
+
+       <li><strong>Authorize ROUVY to Harrys Racing:</strong> The ROUVY Authorization page will be displayed, prompting you to <b><i>authorize the connection</b></i> between your ROUVY account and Harrys Racing. 
+	              </li><br>
+
+	   <a href="{{ url_for('static', filename='images/Rouvy-Authorize.png') }}"
+          target="_blank"
+          class="registration-screenshot">
+
+         <img src="{{ url_for('static', filename='images/Rouvy-Authorize.png') }}"
+            alt="ROUVY login password page">	
+		</a>	
+        <p><i>[Only the first two check boxes are required to enable full functionality for Harrys Racing]</i></p>
+	</ol>	
+      <h3><strong>Register for Harrys Racing:</strong></h3>
+    	
+	<article class="registration-action">
+       <a href="{{ url_for('authorize') }}" class="registration-button">REGISTER ON ROUVY</a>
+    </article>	  
+
+    <p><br><strong>Questions? </strong><br>email : harrysracing@altmail.kr </p>
+
+</section>
+
+    <p><strong><a href="{{ url_for('home') }}">Home</a></strong></p>
       </section>
     </div>
   </div>

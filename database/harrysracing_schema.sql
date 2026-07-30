@@ -55,6 +55,8 @@ DROP TABLE IF EXISTS GC;
   Id	INTEGER PRIMARY KEY,
   StageId INTEGER, -- FK to Stage table
   RiderId	INTEGER, -- FK to Rider table
+  Weight FLOAT, -- Weight at time of race
+  FTP INTEGER, -- FTP at time of race
   FinishTime FLOAT, -- Race Time in seconds for fastest race Rider rode for Stage
   Position INTEGER, -- Rider's Position in Stage
   Points INTEGER, -- Rider's Points in Stage
@@ -72,8 +74,9 @@ DROP TABLE IF EXISTS Rider;
   AgeGroupId INTEGER, -- FK to AgeGroup lookup table
   Gender TEXT, 
   Nationality TEXT, 
-  Weight REAL, -- in kgs
-  FTP INTEGER
+  CurrentWeight REAL, -- in kgs
+  CurrentFTP INTEGER,
+  TimeZone TEXT
   );
 
 DROP TABLE IF EXISTS Participant;
@@ -85,32 +88,43 @@ DROP TABLE IF EXISTS Participant;
   UNIQUE (SeriesId, RiderId)
   );
 
+DROP TABLE IF EXISTS OAuthKey;
+
+ CREATE TABLE OAuthKey (	
+  Id INTEGER PRIMARY KEY,
+  RiderId INTEGER UNIQUE, -- FK to Rider table
+  AccessToken TEXT UNIQUE,
+  RefreshToken TEXT UNIQUE,
+  ExpiresAt TEXT -- Datetime
+  );
+
 /* Lookup tables 
    - table creation followed by population statements*/
 
 DROP TABLE IF EXISTS AgeGroup;
 
  CREATE TABLE AgeGroup (	
-  Id	INTEGER PRIMARY KEY,
-  Label TEXT -- e.g '0-18', '19-34' etc.
+  Id INTEGER PRIMARY KEY,
+  StartAge INTEGER UNIQUE, -- ie 0, 19, 35 etc
+  EndAge INTEGER UNIQUE -- ie 18, 34, 39, 44, 49 etc
   );
 
-INSERT INTO AgeGroup (Label)
+INSERT INTO AgeGroup (StartAge,EndAge)
 VALUES 
-   ('0-18'),
-   ('19-34'),
-   ('35-39'),
-   ('40-44'),
-   ('45-49'),
-   ('50-54'),
-   ('55-59'),
-   ('60-64'),
-   ('65-69'),
-   ('70-74'),
-   ('75-79'),
-   ('80-84'),
-   ('85-89'),
-   ('90+');
+   (0,18),
+   (19,34),
+   (35,39),
+   (40,44),
+   (45,49),
+   (50,54),
+   (55,59),
+   (60,64),
+   (65,69),
+   (70,74),
+   (75,79),
+   (80,84),
+   (85,89),
+   (90,200);
 		
 DROP TABLE IF EXISTS StagePoints;
 

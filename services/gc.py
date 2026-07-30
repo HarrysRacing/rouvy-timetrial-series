@@ -5,7 +5,7 @@ def get_topten_gcinfo(series_id):
     db_path = Path(__file__).resolve().parent.parent / "database" / "harrysracing.db"
     con = sqlite3.connect(db_path)
     cur = con.cursor()
-    query = ('SELECT G.Position, R.UserName, R.Gender, N.Nationality, A.Label, G.CountingStages, G.Points '
+    query = ('SELECT G.Position, R.UserName, R.Gender, N.Nationality, A.StartAge || "-" || A.EndAge, G.CountingStages, G.Points '
              'FROM GC AS G, Rider AS R, AgeGroup AS A, Nationality AS N '
              'WHERE G.SeriesId = ? '
              'AND R.ID = G.RiderId '

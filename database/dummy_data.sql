@@ -62,21 +62,22 @@ INSERT INTO Rider (
   AgeGroupId, -- FK to AgeGroup lookup table
   Gender, 
   Nationality, 
-  Weight, -- in kgs
-  FTP
+  CurrentWeight, -- in kgs
+  CurrentFTP,
+  TimeZone
   )
 VALUES 
-  ('616e77e23b291ca7ebb5c989','Old-Harry',8,'male','CA',59.42055199999999,212),
-  ('616e77e23b291ca7ebb5c990','TheFishTail',5,'male','FR',47.6750,186),
-  ('616e77e23b291ca7ebb5c991','Coffee Bean',2,'female','CH',77.7,286),
-  ('616e77e23b291ca7ebb5c992','Krank',4,'female','BE',97.4,386),
-  ('616e77e23b291ca7ebb5c993','Franko',1,'male','AU',67.89,206),
-  ('616e77e23b291ca7ebb5c994','Samuel Maddox',5,'male','CA',81.45,265),
-  ('616e77e23b291ca7ebb5c995','FasterThanU',7,'female','ES',64.78,236),
-  ('616e77e23b291ca7ebb5c996','Slugger',7,'male','FR',75.78,246),
-  ('616e77e23b291ca7ebb5c997','Ms. Pritte',8,'male','NZ',81.0,226),
-  ('616e77e23b291ca7ebb5c998','Mud-Slinger',4,'male','BE',71.23,196),
-  ('616e77e23b291ca7ebb5c999','Geoff1973',6,'male','CH',69.18,252);
+  ('616e77e23b291ca7ebb5c989','William',8,'male','CA',59.42055199999999,212,'America/Iqaluit'),
+  ('616e77e23b291ca7ebb5c990','TheFishTail',5,'male','FR',47.6750,186,'America/Iqaluit'),
+  ('616e77e23b291ca7ebb5c991','Coffee Bean',2,'female','CH',77.7,286,'America/Iqaluit'),
+  ('616e77e23b291ca7ebb5c992','Krank',4,'female','BE',97.4,386,'America/Iqaluit'),
+  ('616e77e23b291ca7ebb5c993','Franko',1,'male','AU',67.89,206,'America/Iqaluit'),
+  ('616e77e23b291ca7ebb5c994','Samuel Maddox',5,'male','CA',81.45,265,'America/Iqaluit'),
+  ('616e77e23b291ca7ebb5c995','FasterThanU',7,'female','ES',64.78,236,'America/Iqaluit'),
+  ('616e77e23b291ca7ebb5c996','Slugger',7,'male','FR',75.78,246,'America/Iqaluit'),
+  ('616e77e23b291ca7ebb5c997','Ms. Pritte',8,'male','NZ',81.0,226,'America/Iqaluit'),
+  ('616e77e23b291ca7ebb5c998','Mud-Slinger',4,'male','BE',71.23,196,'America/Iqaluit'),
+  ('616e77e23b291ca7ebb5c999','Geoff1973',6,'male','CH',69.18,252,'America/Iqaluit');
 
 DELETE FROM Participant;
 

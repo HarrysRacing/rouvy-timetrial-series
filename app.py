@@ -1,5 +1,5 @@
 # import the Flask library
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, request, logging
 
 #import datetime functions
 from datetime import datetime
@@ -8,7 +8,10 @@ from datetime import datetime
 from services.series import get_active_series
 from services.stage import get_stagesinfo
 from services.gc import get_topten_gcinfo
-from services.lookup import get_pointslist
+from services.db_lookup import get_pointslist
+from services.db_rider_reg import save_rider_auth, DatabaseError
+from services.rouvy_oauth import get_oauth_url, get_token, RouvyOAuthError
+from services.rouvy_api import get_rouvy_rider,  RouvyAPIError
 
 # app is a standard construct in Flask and where app.py is called from a python session "__name__" will be set by python to "__main__"
 # hence further down the app.run will be triggered in debug mode
@@ -84,6 +87,40 @@ def terms():
 def register():
     return render_template("register.html") 
 
+@app.route("/authorize")
+def authorize():
+    auth_url = get_oauth_url()
+    return redirect(auth_url)
+
+@app.route("/auth/callback")
+def callback():
+    
+    try:
+    
+       code = request.args.get("code")
+
+       if not code:
+          app.logger.warning("No authorization code returned by ROUVY")
+          return render_template("registration_error.html") 
+           
+       # Exchange the Auth Code for the Token data
+       token_data = get_token(code)
+
+       #Get the Rouvy Rider Profile via Rouvy API
+       rouvy_rider_profile = get_rouvy_rider(token_data["access_token"])
+
+       #Store authorization and Rider Profile in the database
+       save_rider_auth(token_data,rouvy_rider_profile)
+   
+       return render_template("registration_success.html")
+   
+    except (RouvyOAuthError, RouvyAPIError, DatabaseError) as error:
+
+       # Log the technical error
+       app.logger.exception("ROUVY registration failed.")
+
+       return render_template("registration_error.html")
+
 @app.route("/points")
 def points():
     series_info = get_active_series()
@@ -94,5 +131,8 @@ def points():
 
 # Start with flask web app, with debug as True,
 # only if this is the starting page
+#The __name__ is a built-in special variable that evaluates the name of the current module. 
+#If the source file is executed as the main program, the interpreter sets the __name__ variable to have a value “__main__”. 
+#If this file is being imported from another module, __name__ will be set to the module’s name
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True,port=3000)
