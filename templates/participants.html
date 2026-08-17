@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Stage Points</title>
+  <title>Series Participants</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}"  />
 </head>
@@ -19,33 +19,31 @@
     <img src="{{ url_for('static', filename='images/HRlogo.png') }}" 
          alt="Harrys Racing Logo"/>
 
-          <h1>Stage Points</h1>
+          <h1>Current Participants</h1>
        </div>
 
-    <p><strong>Last updated:</strong> July 2026</p>
-
     <p>
-      Points awarded for stage positions in <i><strong>{{name}}</strong></i> are as follows:
+      The table below lists all riders who are registered on Harrys Racing and who have entered (through ROUVY) a race scheduled for <i><strong>{{name}}</strong></i>:
     </p>
 
     <table>
 	<tr>
-    <th>Stage Position</th>
-    <th>Points</th>
+    <th>ROUVY Name</th>
+    <th>Gender</th>
+	<th>Age Group</th>	
+	<th>Nationality</th>		
     </tr>
-    {% for item in points_tbl %}  
-    <tr>
+    {% for item in participants_tbl %}  
+    <tr class="table_std_row">
        <td>{{item[0]}}</td>
-       <td>{{item[1]}}</td>
+       <td>{{item[1]}}</td>       
+	   <td>{{item[2]}}</td>       
+	   <td>{{item[3]}}</td>
     </tr>
     {% endfor %}
 	</table>
-	
-    <p>
-      Points awarded beyond the last position listed above, will be the same as for the last position listed above.
-    </p>	
-	
-     <p><strong><a href="{{ url_for('home') }}" class="links">Go to Home page</a></strong></p>
+		
+    <p><strong><a href="{{ url_for('home') }}" class="links">Go to Home page</a></strong></p>
 
       </section>
     </div>

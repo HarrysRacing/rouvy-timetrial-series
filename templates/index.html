@@ -68,9 +68,9 @@
         <ul>
 		   <li><i><strong>{{name}}</strong></i> runs from <b>{{start_date}}</b> until <b>{{end_date}}</b>.</li>
 		   <li><b>The best {{counting_stages}} stages raced</b> will be awarded points that count towards the overall General Classification.</li>
-		   <li>The points awarded for Stage rankings, for the current series, can be found in the <i><b><a href="{{ url_for('points') }}">Points Table</a></b></i></li>
+		   <li>The points awarded for Stage rankings, for the current series, can be found in the <i><b><a href="{{ url_for('points') }}" class="links">Points Table</a></b></i></li>
 		</ul>
-	    <p>For an explanation of how Harrys Racing Series works, please refer to the <i><b><a href="{{ url_for('guide') }}">Guidelines</a></b></i>.<br></p> 
+	    <p>For an explanation of how Harrys Racing Series works, please refer to the <i><b><a href="{{ url_for('guide') }}" class="links">Guidelines</a></b></i>.<br></p> 
 		
 
       <section class="posts">
@@ -92,14 +92,26 @@
 		     <th>Ascent(m)</th>
           </tr>
           {% for item in stage_tbl %}  
-          <tr>
-             <td>{{item[0]}}</td>
-             <td>{{item[1]}}</td>
-	         <td>{{item[2]}}</td>       
+          <tr class="{{ item[9] }}">
+             <td>    
+			    <a href="{{ url_for('rouvy_races', stageId=item[7], stageName=item[0]) }}" class="links"> 
+				  {{ item[0] }} 
+				</a>
+			 </td>
+			 <td>    
+                <a href="https://riders.rouvy.com/route/{{ item[8] }}"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="links">
+                  {{ item[1] }}
+				  <i class="icon solid fa-external-link-alt"></i>
+                </a>
+			 </td>
+             <td>{{item[2]}}</td>
 	         <td>{{item[3]}}</td>       
-	         <td>{{item[4]}}</td>
-	         <td>{{item[5]}}</td>       
-	         <td>{{item[6]}}</td>
+	         <td>{{item[4]}}</td>       
+	         <td>{{item[5]}}</td>
+	         <td>{{item[6]}}</td>       
           </tr>
           {% endfor %}
 	      </table><br>
@@ -141,7 +153,7 @@
 		     <li><a href="{{ url_for('terms') }}" class="button">Current GC (Full)</a></li>
 		     <li><a href="{{ url_for('terms') }}" class="button">Stage Results</a></li>
 		     <li><a href="{{ url_for('terms') }}" class="button">Upcoming Races</a></li>
-             <li><a href="{{ url_for('terms') }}" class="button">Participants</a></li>
+             <li><a href="{{ url_for('participants') }}" class="button">Participants</a></li>
 		     <li><a href="{{ url_for('register') }}" class="button">Rider Registration</a></li>
           </ul>
         </article>
@@ -165,7 +177,7 @@
         <h3>Contact</h3>
         <p style="text-align: left;">
           For project enquiries
-		  please contact <i>TheWebMaster</i> at:<br> 
+		  please contact <i>Harry</i> at:<br> 
           harrysracing@altmail.kr
         </p>
       </section>

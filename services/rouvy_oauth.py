@@ -19,6 +19,51 @@ TOKEN_URL = "https://api.rouvy.com/oauth/token"
 class RouvyOAuthError(Exception):
     pass   #do nothing and continue, so allows for basic inheritance nothing else
 
+class RouvyAuthorizationRequired(Exception):
+    pass   #do nothing and continue, so allows for basic inheritance nothing else
+
+def exchange_token(refreshToken):
+
+    data = {
+        "client_id": CLIENT_ID,
+        "client_secret": CLIENT_SECRET,
+        "refresh_token": refreshToken,
+        "grant_type": "refresh_token"
+    }
+
+    try:
+        response = requests.post(
+            TOKEN_URL,
+            data=data
+        )
+
+    except requests.RequestException as e:
+        raise RouvyOAuthError(
+            "Unable to contact ROUVY token endpoint"
+        ) from error
+
+    # Refresh token was rejected / authorization is no longer valid
+    if response.status_code == 400:
+        raise RouvyAuthorizationRequired(
+            "ROUVY refresh token is no longer valid"
+        )
+
+    try:
+        response.raise_for_status()
+    except requests.RequestException as e:
+        raise RouvyOAuthError(
+            "ROUVY token request failed"
+        ) from error
+
+    token_data = response.json()
+
+    if "access_token" not in token_data:
+        raise RouvyOAuthError(
+            "ROUVY token response did not contain an access token"
+        )
+
+    return token_data
+
 def get_oauth_url():
 
     state = secrets.token_hex(16)

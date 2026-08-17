@@ -65,6 +65,19 @@
   left: 10px;
 }
 
+#main .logo-title h1 {
+    font-size: 3rem;
+}
+
+/* Override html page headings size h1 and h2 */
+#main > .post header.major > h1 {    
+    font-size: 3rem;
+}
+
+#main > .post header.major h2 {
+    font-size: 2.5rem;
+}
+
 .registration-screenshot {
     display: block;
     max-width: 700px;
@@ -94,4 +107,27 @@
 .registration-button:hover {
     background-color: #e5b93f;
     color: #000080 !important;
+}
+
+/* define colours for Complete and Active stages shown on Home page
+*/
+.complete {
+    color: navy;
+}
+
+.active {
+    color: green;
+}
+	
+.links {
+    color: navy;
+}
+
+.links i {
+    font-size: 0.8em;
+    margin-left: 0.25em;
+}
+
+.table_std_row {
+    color: navy;
 }
