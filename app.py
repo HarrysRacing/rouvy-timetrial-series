@@ -5,7 +5,7 @@ from flask import Flask, render_template, redirect, request, logging
 from datetime import datetime
 
 #import function to retrieve active series data
-from services.db_utils import get_pointslist, get_participantslist, get_raceslist, get_active_series, get_stagesinfo, get_topten_gcinfo, save_rider_auth, DatabaseError
+from services.db_utils import get_points_list, get_participants_list, get_races_list, get_active_series, get_stages_info, get_top_ten_gc_info, save_rider_auth, DatabaseError
 from services.rouvy_oauth import get_oauth_url, get_token, RouvyOAuthError
 from services.rouvy_api import get_rouvy_rider,  RouvyAPIError
 
@@ -68,9 +68,9 @@ def home():
     series_info = get_active_series()
     
     #stages_info : Name, RouteName, StartDate, EndDate, Country, Distance, Ascent, Id, RouteId
-    stages_info = get_stagesinfo()
+    stages_info = get_stages_info()
     
-    gc_info = get_topten_gcinfo(series_info[0][0])
+    gc_info = get_top_ten_gc_info(series_info[0][0])
        
     # Parse the ISO 8601 date
     start_dt = datetime.fromisoformat(series_info[0][2])
@@ -118,7 +118,7 @@ def index():
 def participants():
     series_info = get_active_series()
     
-    participants_list = get_participantslist()
+    participants_list = get_participants_list()
     
     return render_template("participants.html", name=series_info[0][1], participants_tbl=participants_list)
     
@@ -126,7 +126,7 @@ def participants():
 def points():
     series_info = get_active_series()
     
-    points_list = get_pointslist()
+    points_list = get_points_list()
     
     return render_template("points.html", name=series_info[0][1], points_tbl=points_list)  
 
@@ -141,12 +141,13 @@ def register():
 @app.route("/rouvy_races")
 def rouvy_races():
 
+    # stageId and stageName passed in as commandline arguments in index.html, when calling rouvy_races.html
     stageId = request.args.get("stageId")
     stageName = request.args.get("stageName")
 
     series_info = get_active_series()
     
-    races_info = get_raceslist(stageId)
+    races_info = get_races_list(stageId)
     
     races_list = []
     

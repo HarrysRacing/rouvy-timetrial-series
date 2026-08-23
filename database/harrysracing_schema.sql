@@ -55,9 +55,9 @@ DROP TABLE IF EXISTS GC;
   Id	INTEGER PRIMARY KEY,
   StageId INTEGER, -- FK to Stage table
   RiderId	INTEGER, -- FK to Rider table
-  Weight FLOAT, -- Weight at time of race
-  FTP INTEGER, -- FTP at time of race
-  FinishTime FLOAT, -- Race Time in seconds for fastest race Rider rode for Stage
+  Weight REAL, -- Weight at time of race
+  AvgPower REAL, 
+  FinishTime REAL, -- Race Time in seconds for fastest race Rider rode for Stage
   Position INTEGER, -- Rider's Position in Stage
   Points INTEGER, -- Rider's Points in Stage
   RaceId INTEGER, -- FK to Race table where Rider acheived FinishTime
@@ -75,8 +75,7 @@ DROP TABLE IF EXISTS Rider;
   Gender TEXT, 
   Nationality TEXT, 
   CurrentWeight REAL, -- in kgs
-  CurrentFTP INTEGER,
-  TimeZone TEXT
+  CurrentFTP INTEGER
   );
 
 DROP TABLE IF EXISTS Participant;
@@ -130,7 +129,7 @@ DROP TABLE IF EXISTS StagePoints;
 
  CREATE TABLE StagePoints (	
   Position	INTEGER PRIMARY KEY,  -- 1 to x
-  Points Integer -- 200, 185, 170, 160, 150, 145, 140... 10, 9, 8, 7, 6, 5, 5, 5, 5 etc.
+  Points INTEGER -- 200, 185, 170, 160, 150, 145, 140... 10, 9, 8, 7, 6, 5, 5, 5, 5 etc.
   );
 
 INSERT INTO StagePoints (Points)
@@ -390,7 +389,14 @@ VALUES
     ('ZM','Zambia', 'Zambian'),
     ('ZW','Zimbabwe', 'Zimbabwean');
 
+DROP TABLE IF EXISTS Administrator;
 
+ CREATE TABLE Administrator (	
+  UserName TEXT UNIQUE -- Rouvy Username pulled via API
+  );
+  
+INSERT INTO Administrator (UserName)
+   VALUES ('Old-Harry');
 
   
   

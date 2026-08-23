@@ -14,13 +14,7 @@ def get_rouvy_race_info(access_token, event_id):
        #build ROUVY API EVent URL
        ROUVY_API_EVENT_URL = ROUVY_API_EVENT + event_id  
        
-       print("Event ID:", event_id)
-       print("URL:", ROUVY_API_EVENT_URL)
-
-       
        event_response = requests.get(ROUVY_API_EVENT_URL,headers={"Authorization": f"Bearer {access_token}"} )
-
-       print("HTTP:", event_response.status_code)
 
        # 200 Success returns (Key fields): 
        #     "event": 
@@ -67,6 +61,73 @@ def get_rouvy_race_info(access_token, event_id):
             "ROUVY returned invalid JSON"
         ) from error
 
+def get_rouvy_race_result(access_token, event_id):
+
+    try:
+  
+       #build ROUVY API EVent URL
+       ROUVY_API_EVENT_URL = ROUVY_API_EVENT + event_id + '/activities?limit=100&offset=0' 
+       
+       event_response = requests.get(ROUVY_API_EVENT_URL,headers={"Authorization": f"Bearer {access_token}"} )
+
+       print("HTTP:", event_response.status_code)
+    
+    except requests.RequestException as error:
+
+       raise RouvyAPIError(
+            "Unable to contact ROUVY API"
+       ) from error
+
+    if event_response.status_code != 200:
+
+       raise RouvyAPIError(
+             f"ROUVY event results request failed: HTTP {event_response.status_code}"
+       )
+    
+
+    try:
+
+        return event_response.json()
+
+    except ValueError as error:
+
+        raise RouvyAPIError(
+            "ROUVY returned invalid JSON"
+        ) from error
+
+def get_rouvy_race_start_list(access_token, event_id):
+
+    try:
+  
+       #build ROUVY API EVent URL
+       ROUVY_API_EVENT_URL = ROUVY_API_EVENT + event_id + '/startlist?limit=100&offset=0' 
+       
+       event_response = requests.get(ROUVY_API_EVENT_URL,headers={"Authorization": f"Bearer {access_token}"} )
+
+       print("HTTP:", event_response.status_code)
+    
+    except requests.RequestException as error:
+
+       raise RouvyAPIError(
+            "Unable to contact ROUVY API"
+       ) from error
+
+    if event_response.status_code != 200:
+
+       raise RouvyAPIError(
+             f"ROUVY event startlist request failed: HTTP {event_response.status_code}"
+       )
+    
+
+    try:
+
+        return event_response.json()
+
+    except ValueError as error:
+
+        raise RouvyAPIError(
+            "ROUVY returned invalid JSON"
+        ) from error
 
 def get_rouvy_rider(access_token):
 
