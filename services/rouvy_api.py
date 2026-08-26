@@ -70,7 +70,6 @@ def get_rouvy_race_result(access_token, event_id):
        
        event_response = requests.get(ROUVY_API_EVENT_URL,headers={"Authorization": f"Bearer {access_token}"} )
 
-       print("HTTP:", event_response.status_code)
     
     except requests.RequestException as error:
 
@@ -103,8 +102,6 @@ def get_rouvy_race_start_list(access_token, event_id):
        ROUVY_API_EVENT_URL = ROUVY_API_EVENT + event_id + '/startlist?limit=100&offset=0' 
        
        event_response = requests.get(ROUVY_API_EVENT_URL,headers={"Authorization": f"Bearer {access_token}"} )
-
-       print("HTTP:", event_response.status_code)
     
     except requests.RequestException as error:
 
