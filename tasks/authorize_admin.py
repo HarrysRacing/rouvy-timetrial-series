@@ -12,7 +12,7 @@ from services.db_utils import save_rider_auth
 from services.rouvy_oauth import get_oauth_url, get_token
 from services.rouvy_api import get_rouvy_rider
 
-CALLBACKURL = "http://127.0.0.1:3000/authorize"
+OAUTH_URL = "http://127.0.0.1:3000/authorize"
 
 app = Flask(__name__)
 
@@ -47,7 +47,7 @@ def callback():
 
 if __name__ == "__main__":
 
-    webbrowser.open(CALLBACKURL)
+    webbrowser.open(OAUTH_URL)
 
     app.run(
         debug=False,
