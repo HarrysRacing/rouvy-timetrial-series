@@ -291,7 +291,7 @@ def get_participants_list():
                'ORDER BY R.UserName;'
                )
 
-      cur.execute(query,(series_info[0][0],))
+      cur.execute(query,(series_info[0],))
       results = cur.fetchall()
    return results
 

@@ -70,11 +70,11 @@ def home():
     #stages_info : Name, RouteName, StartDate, EndDate, Country, Distance, Ascent, Id, RouteId
     stages_info = get_stages_info()
     
-    gc_info = get_top_ten_gc_info(series_info[0][0])
+    gc_info = get_top_ten_gc_info(series_info[0])
        
     # Parse the ISO 8601 date
-    start_dt = datetime.fromisoformat(series_info[0][2])
-    end_dt = datetime.fromisoformat(series_info[0][3])
+    start_dt = datetime.fromisoformat(series_info[2])
+    end_dt = datetime.fromisoformat(series_info[3])
     
     # Format to dd-mmm-yyyy
     start_dt_fmt = start_dt.strftime('%d-%b-%Y')
@@ -106,8 +106,8 @@ def home():
          
          stage_list.append(row)         
     
-    return render_template("index.html", name=series_info[0][1], start_date=start_dt_fmt,end_date=end_dt_fmt,
-                            counting_stages=series_info[0][4], stage_tbl=stage_list, gc_tbl=gc_info)
+    return render_template("index.html", name=series_info[1], start_date=start_dt_fmt,end_date=end_dt_fmt,
+                            counting_stages=series_info[4], stage_tbl=stage_list, gc_tbl=gc_info)
     
 # there are no links to this from the webpage, so just here to address a manual entry in browser with index url
 @app.route("/index")
@@ -120,7 +120,7 @@ def participants():
     
     participants_list = get_participants_list()
     
-    return render_template("participants.html", name=series_info[0][1], participants_tbl=participants_list)
+    return render_template("participants.html", name=series_info[1], participants_tbl=participants_list)
     
 @app.route("/points")
 def points():
@@ -128,7 +128,7 @@ def points():
     
     points_list = get_points_list()
     
-    return render_template("points.html", name=series_info[0][1], points_tbl=points_list)  
+    return render_template("points.html", name=series_info[1], points_tbl=points_list)  
 
 @app.route("/privacy")
 def privacy():
@@ -172,7 +172,7 @@ def rouvy_races():
          
          races_list.append(row)
    
-    return render_template("rouvy_races.html", series_name=series_info[0][1], stage_name=stageName, races_tbl=races_list)
+    return render_template("rouvy_races.html", series_name=series_info[1], stage_name=stageName, races_tbl=races_list)
 
 @app.route("/terms")
 def terms():
