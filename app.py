@@ -25,39 +25,39 @@ app = Flask(__name__)
 def about():
     return render_template("about.html") 
 
-@app.route("/authorize")
-def authorize():
-    auth_url = get_oauth_url()
-    return redirect(auth_url)
+#@app.route("/authorize")
+#def authorize():
+#    auth_url = get_oauth_url()
+#    return redirect(auth_url)
 
-@app.route("/auth/callback")
-def callback():
+#@app.route("/auth/callback")
+#def callback():
     
-    try:
+#    try:
     
-       code = request.args.get("code")
+#       code = request.args.get("code")
 
-       if not code:
-          app.logger.warning("No authorization code returned by ROUVY")
-          return render_template("registration_error.html") 
+#       if not code:
+#          app.logger.warning("No authorization code returned by ROUVY")
+#          return render_template("registration_error.html") 
            
        # Exchange the Auth Code for the Token data
-       token_data = get_token(code)
+#       token_data = get_token(code)
 
        #Get the Rouvy Rider Profile via Rouvy API
-       rouvy_rider_profile = get_rouvy_rider(token_data["access_token"])
+#       rouvy_rider_profile = get_rouvy_rider(token_data["access_token"])
 
        #Store authorization and Rider Profile in the database
-       save_rider_auth(token_data,rouvy_rider_profile)
+#       save_rider_auth(token_data,rouvy_rider_profile)
    
-       return render_template("registration_success.html")
+#       return render_template("registration_success.html")
    
-    except (RouvyOAuthError, RouvyAPIError, DatabaseError) as error:
+#    except (RouvyOAuthError, RouvyAPIError, DatabaseError) as error:
 
        # Log the technical error
-       app.logger.exception("ROUVY registration failed.")
+#       app.logger.exception("ROUVY registration failed.")
 
-       return render_template("registration_error.html")
+#       return render_template("registration_error.html")
 
 @app.route("/guide")
 def guide():
@@ -110,9 +110,9 @@ def home():
                             counting_stages=series_info[4], stage_tbl=stage_list, gc_tbl=gc_info)
     
 # there are no links to this from the webpage, so just here to address a manual entry in browser with index url
-@app.route("/index")
-def index():
-    return render_template("index.html", name="Fred")
+#@app.route("/index")
+#def index():
+#    return render_template("index.html", name="Fred")
     
 @app.route("/participants")
 def participants():
@@ -134,9 +134,9 @@ def points():
 def privacy():
     return render_template("privacy.html")  
 
-@app.route("/register")
-def register():
-    return render_template("register.html") 
+#@app.route("/register")
+#def register():
+#    return render_template("register.html") 
 
 @app.route("/rouvy_races")
 def rouvy_races():
