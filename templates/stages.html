@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stages</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}"  />
+</head>
+
+<body class="is-preload">
+
+  <div id="wrapper">
+
+    <div id="main">
+
+      <section class="post">
+       <div class="logo-title">
+    <img src="{{ url_for('static', filename='images/HRlogo.png') }}" 
+         alt="Harrys Racing Logo"/>
+
+          <h1>Stages</h1>
+       </div>
+       <p><br><i><strong>{{series_name}}</strong></i> consists of the following Stages:
+          </p>
+          <table class="compact-table">
+	      <tr>
+             <th>Stage Name</th>
+             <th>ROUVY Route</th>
+			 <th>Start Date</th>
+			 <th>End Date</th>
+		     <th>Location</th>
+		     <th>Distance(kms)</th>
+		     <th>Ascent(m)</th>
+			 <th>Status</th>
+          </tr>
+          {% for item in stage_tbl %}  
+          <tr class="{{ item[9] }}">
+             <td>    
+			    <a href="{{ url_for('rouvy_races', stageId=item[7], stageName=item[0]) }}" class="links"> 
+				  {{ item[0] }} 
+				</a>
+			 </td>
+			 <td>    
+                <a href="https://riders.rouvy.com/route/{{ item[8] }}"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="links">
+                  {{ item[1] }}
+				  <i class="icon solid fa-external-link-alt"></i>
+                </a>
+			 </td>
+             <td>{{item[2]}}</td>
+	         <td>{{item[3]}}</td>       
+	         <td>{{item[4]}}</td>       
+	         <td>{{item[5]}}</td>
+	         <td>{{item[6]}}</td>
+             <td>{{item[9]}}</td>			 
+          </tr>
+          {% endfor %}
+	      </table>
+	<p> Race times are displayed in your local time zone. </p>
+	
+    <p><strong><a href="{{ url_for('home') }}" class="links">Go to Home page</a></strong></p>
+
+      </section>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/browser.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/breakpoints.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/util.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/timezone.js') }}"></script>
+
+</body>
+</html>

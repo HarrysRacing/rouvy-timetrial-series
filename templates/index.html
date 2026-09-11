@@ -81,7 +81,7 @@
           <p>
             <i><strong>{{name}}</strong></i> consists of the following Stages:
           </p>
-          <table>
+          <table class="compact-table">
 	      <tr>
              <th>Stage Name</th>
              <th>ROUVY Route</th>
@@ -124,7 +124,7 @@
           <p>
             Current Top Ten GC Standings (where available) :
           </p>
-		  <table>
+		  <table  class="compact-table">
 	      <tr>
              <th>GC Position</th>
 			 <th>Rider</th>
@@ -151,9 +151,9 @@
         <article>		
 		  <ul class="actions">
 		     <li><a href="{{ url_for('terms') }}" class="button">Current GC (Full)</a></li>
-		     <li><a href="{{ url_for('terms') }}" class="button">Stage Results</a></li>
+		     <li><a href="{{ url_for('stages') }}" class="button">Stages Info</a></li>
 		     <li><a href="{{ url_for('terms') }}" class="button">Upcoming Races</a></li>
-             <li><a href="{{ url_for('participants') }}" class="button">Participants</a></li>
+             <li><a href="{{ url_for('participants') }}" class="button">Riders List</a></li>
           </ul>
         </article>
 

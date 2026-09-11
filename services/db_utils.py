@@ -320,7 +320,7 @@ def get_stages_info():
    with sqlite3.connect(DB_PATH) as conn:
       cur = conn.cursor() 
 
-      query = ('SELECT Name, RouteName, date(StartDate), date(EndDate), Country, Distance, Ascent, Id, RouteId '
+      query = ('SELECT Name, RouteName, date(StartDate), date(EndDate), Country, ROUND(Distance,2), Ascent, Id, RouteId '
                'FROM Stage '
                'WHERE SeriesId IN (SELECT Id '
                '                    FROM Series '

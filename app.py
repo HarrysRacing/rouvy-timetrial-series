@@ -174,6 +174,42 @@ def rouvy_races():
    
     return render_template("rouvy_races.html", series_name=series_info[1], stage_name=stageName, races_tbl=races_list)
 
+@app.route("/stages")
+def stages():
+    series_info = get_active_series()
+    
+    #stages_info : Name, RouteName, StartDate, EndDate, Country, Distance, Ascent, Id, RouteId
+    stages_info = get_stages_info()
+    
+    stage_list = []
+    
+    for row in stages_info:
+         
+         # Parse the ISO 8601 date
+         stageS_dt = datetime.fromisoformat(row[2])
+         stageE_dt = datetime.fromisoformat(row[3])
+    
+         li = list(row)
+         
+         # Format to dd-mmm-yyyy
+         li[2] = stageS_dt.strftime('%d-%b-%Y')
+         li[3] = stageE_dt.strftime('%d-%b-%Y')
+         
+         today = datetime.now().date()
+         
+         #mark stage as "complete" or "active"
+         stage_end = stageE_dt.date()
+         status = "complete" if stage_end < today else "active"
+
+         li.append(status)
+         
+         row = tuple(li)
+         
+         stage_list.append(row)         
+    
+    return render_template("stages.html", series_name=series_info[1], stage_tbl=stage_list)
+ 
+
 @app.route("/terms")
 def terms():
     return render_template("terms.html")  
