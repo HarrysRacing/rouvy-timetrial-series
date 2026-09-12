@@ -81,40 +81,42 @@
           <p>
             <i><strong>{{name}}</strong></i> consists of the following Stages:
           </p>
-          <table class="compact-table">
-	      <tr>
-             <th>Stage Name</th>
-             <th>ROUVY Route</th>
-			 <th>Start Date</th>
-			 <th>End Date</th>
-		     <th>Location</th>
-		     <th>Distance(kms)</th>
-		     <th>Ascent(m)</th>
-          </tr>
-          {% for item in stage_tbl %}  
-          <tr class="{{ item[9] }}">
-             <td>    
-			    <a href="{{ url_for('rouvy_races', stageId=item[7], stageName=item[0]) }}" class="links"> 
-				  {{ item[0] }} 
-				</a>
-			 </td>
-			 <td>    
-                <a href="https://riders.rouvy.com/route/{{ item[8] }}"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="links">
-                  {{ item[1] }}
-				  <i class="icon solid fa-external-link-alt"></i>
-                </a>
-			 </td>
-             <td>{{item[2]}}</td>
-	         <td>{{item[3]}}</td>       
-	         <td>{{item[4]}}</td>       
-	         <td>{{item[5]}}</td>
-	         <td>{{item[6]}}</td>       
-          </tr>
-          {% endfor %}
-	      </table><br>
+		  <div class="table-wrapper">
+             <table class="compact-table">
+	         <tr>
+                <th>Stage Name</th>
+                <th>ROUVY Route</th>
+			    <th>Start Date</th>
+			    <th>End Date</th>
+		        <th>Location</th>
+		        <th>Distance(kms)</th>
+		        <th>Ascent(m)</th>
+             </tr>
+             {% for item in stage_tbl %}  
+             <tr class="{{ item[9] }}">
+                <td>    
+			       <a href="{{ url_for('rouvy_races', stageId=item[7], stageName=item[0]) }}" class="links"> 
+				     {{ item[0] }} 
+				   </a>
+			    </td>
+			    <td>    
+                   <a href="https://riders.rouvy.com/route/{{ item[8] }}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="links">
+                     {{ item[1] }}
+				     <i class="icon solid fa-external-link-alt"></i>
+                   </a>
+			    </td>
+                <td>{{item[2]}}</td>
+	            <td>{{item[3]}}</td>       
+	            <td>{{item[4]}}</td>       
+	            <td>{{item[5]}}</td>
+	            <td>{{item[6]}}</td>       
+             </tr>
+             {% endfor %}
+	         </table>
+		 </div><br>
         </article>
 		
         <article>
@@ -124,34 +126,36 @@
           <p>
             Current Top Ten GC Standings (where available) :
           </p>
-		  <table  class="compact-table">
-	      <tr>
-             <th>GC Position</th>
-			 <th>Rider</th>
-			 <th>Gender</th>
-		     <th>Nationality</th>
-		     <th>Age Group</th>
-		     <th>Counting Stages</th>
-			 <th>Points</th>
-          </tr>
-          {% for item in gc_tbl %}  
-          <tr>
-             <td>{{item[0]}}</td>
-             <td>{{item[1]}}</td>
-	         <td>{{item[2]}}</td>       
-	         <td>{{item[3]}}</td>       
-	         <td>{{item[4]}}</td>
-	         <td>{{item[5]}}</td>       
-	         <td>{{item[6]}}</td>
-          </tr>
-          {% endfor %}
-	      </table><br>
+		  <div class="table-wrapper">
+		     <table  class="compact-table">
+	            <tr>
+                   <th>GC Position</th>
+			       <th>Rider</th>
+			       <th>Gender</th>
+		           <th>Nationality</th>
+		           <th>Age Group</th>
+		           <th>Counting Stages</th>
+			       <th>Points</th>
+                </tr>
+                {% for item in gc_tbl %}  
+                <tr>
+                   <td>{{item[0]}}</td>
+                   <td>{{item[1]}}</td>
+	               <td>{{item[2]}}</td>       
+	               <td>{{item[3]}}</td>       
+	               <td>{{item[4]}}</td>
+	               <td>{{item[5]}}</td>       
+	               <td>{{item[6]}}</td>
+                </tr>
+                {% endfor %}
+	         </table>
+		  </div><br>
         </article>
 
         <article>		
 		  <ul class="actions">
 		     <li><a href="{{ url_for('terms') }}" class="button">Current GC (Full)</a></li>
-		     <li><a href="{{ url_for('stages') }}" class="button">Stages Info</a></li>
+		     <li><a href="{{ url_for('stages') }}" class="button">Stages</a></li>
 		     <li><a href="{{ url_for('terms') }}" class="button">Upcoming Races</a></li>
              <li><a href="{{ url_for('participants') }}" class="button">Riders List</a></li>
           </ul>

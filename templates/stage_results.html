@@ -23,40 +23,37 @@
        </div>
 
     <p><br>
-      Results for <i><strong>{{stage_name}}</strong></i> stage in <i><strong>{{series_name}}</strong></i> are as follows:
+      Results for <i><strong>{{stage_name}}</strong></i> stage in <i><strong>{{series_name}}</strong></i> :
     </p>
 
-             *** need to show Stage Name, ROUVY Route, Start Date, End Date, Location, Distance(kms),  Ascent(m) ***
-
-    <table class="compact-table">
-	<tr>
-    <th>Stage Position</th>
-	<th>Rider</th>
-	<th>Finish Time</th>
-    <th>Gender</th>
-	<th>Nationality</th>
-	<th>Age Group</th>
-	<th>Avg Power</th>
-	<th>W/Kg</th>
-    <th>Points</th>
-    </tr>
-    {% for item in points_tbl %}  
-    <tr>
-       <td>{{item[0]}}</td>
-       <td>{{item[1]}}</td>
-       <td>{{item[2]}}</td>
-       <td>{{item[3]}}</td>
-       <td>{{item[4]}}</td>       
-	   <td>{{item[5]}}</td>
-       <td>{{item[6]}}</td>
-       <td>{{item[7]}}</td>
-       <td>{{item[8]}}</td>
-    </tr>
-    {% endfor %}
-	</table>	
-	
-	<p>This Stage was run on the following ROUVY route: <i><strong>{{route_name}}</strong></i></p>
-	
+    <div class="table-wrapper">
+       <table class="compact-table">
+	   <tr>
+       <th>Position</th>
+	   <th>Rider</th>
+	   <th>Finish Time</th>
+       <th>Gender</th>
+	   <th>Nationality</th>
+	   <th>Age Group</th>
+	   <th>Avg Power</th>
+	   <th>W/Kg</th>
+       <th>Points</th>
+       </tr>
+       {% for item in results_tbl %}  
+       <tr>
+          <td>{{item[0]}}</td>
+          <td>{{item[1]}}</td>
+          <td>{{item[2]}}</td>
+          <td>{{item[3]}}</td>
+          <td>{{item[4]}}</td>       
+	      <td>{{item[5]}}</td>
+          <td>{{item[6]}}</td>
+          <td>{{item[7]}}</td>
+          <td>{{item[8]}}</td>
+       </tr>
+       {% endfor %}
+	   </table>	
+	</div>
      <p><strong><a href="{{ url_for('home') }}" class="links">Go to Home page</a></strong></p>
 
       </section>

@@ -331,6 +331,23 @@ def get_stages_info():
       cur.execute(query)
       results = cur.fetchall()
    return results   
+
+def get_stage_results(stage_id):
+   with sqlite3.connect(DB_PATH) as conn:
+      cur = conn.cursor() 
+
+      query = ('SELECT S.Position, R.UserName, S.FinishTime, R.Gender, R.Nationality, A.StartAge || "-" || A.EndAge, S.AvgPower, ROUND((S.AvgPower/S.Weight),2), S.Points '
+               'FROM StageResult AS S, Rider AS R, AgeGroup AS A '
+               'WHERE S.StageId = ? '
+               'AND R.Id = S.RiderId '
+               'AND A.ID = R.AgeGroupId '
+               'ORDER BY S.Position;'               
+               )
+      print('query: ',query)
+               
+      cur.execute(query,(stage_id,))
+      results = cur.fetchall()
+   return results 
     
 def get_top_ten_gc_info(series_id):
    with sqlite3.connect(DB_PATH) as conn:

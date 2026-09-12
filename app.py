@@ -5,7 +5,7 @@ from flask import Flask, render_template, redirect, request, logging
 from datetime import datetime
 
 #import function to retrieve active series data
-from services.db_utils import get_points_list, get_participants_list, get_races_list, get_active_series, get_stages_info, get_top_ten_gc_info, save_rider_auth, DatabaseError
+from services.db_utils import get_points_list, get_participants_list, get_races_list, get_active_series, get_stages_info, get_stage_results, get_top_ten_gc_info, save_rider_auth, DatabaseError
 from services.rouvy_oauth import get_oauth_url, get_token, RouvyOAuthError
 from services.rouvy_api import get_rouvy_rider,  RouvyAPIError
 
@@ -208,6 +208,19 @@ def stages():
          stage_list.append(row)         
     
     return render_template("stages.html", series_name=series_info[1], stage_tbl=stage_list)
+
+@app.route("/stage_results")
+def stage_results():
+
+    # stageId and stageName passed in as commandline arguments in index.html, when calling rouvy_races.html
+    stageId = request.args.get("stageId")
+    stageName = request.args.get("stageName")
+    
+    series_info = get_active_series()
+    
+    stage_results = get_stage_results(stageId)
+   
+    return render_template("stage_results.html", series_name=series_info[1], stage_name=stageName, results_tbl=stage_results)
  
 
 @app.route("/terms")

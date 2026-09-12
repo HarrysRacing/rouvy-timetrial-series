@@ -23,6 +23,9 @@
        </div>
        <p><br><i><strong>{{series_name}}</strong></i> consists of the following Stages:
           </p>
+		  
+		  	<p> Select the Stage Name to view either Scheduled Races or Stage Results. </p>
+	   <div class="table-wrapper">
           <table class="compact-table">
 	      <tr>
              <th>Stage Name</th>
@@ -36,11 +39,17 @@
           </tr>
           {% for item in stage_tbl %}  
           <tr class="{{ item[9] }}">
-             <td>    
-			    <a href="{{ url_for('rouvy_races', stageId=item[7], stageName=item[0]) }}" class="links"> 
-				  {{ item[0] }} 
-				</a>
-			 </td>
+             <td>
+                {% if item[9] == "complete" %}
+                   <a href="{{ url_for('stage_results', stageId=item[7], stageName=item[0]) }}" class="links">
+                     {{ item[0] }}
+                   </a>
+                {% else %}
+                   <a href="{{ url_for('rouvy_races', stageId=item[7], stageName=item[0]) }}" class="links">
+                     {{ item[0] }}
+                   </a>
+                {% endif %}
+             </td>
 			 <td>    
                 <a href="https://riders.rouvy.com/route/{{ item[8] }}"
                    target="_blank"
@@ -59,7 +68,7 @@
           </tr>
           {% endfor %}
 	      </table>
-	<p> Race times are displayed in your local time zone. </p>
+       </div>
 	
     <p><strong><a href="{{ url_for('home') }}" class="links">Go to Home page</a></strong></p>
 

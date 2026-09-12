@@ -132,6 +132,8 @@
     color: navy;
 }
 
+/* resize table from default*/
+
 table.compact-table {
     width: auto;
 /*	margin: 0 auto;  -- centre-justify */  
@@ -142,4 +144,9 @@ table.compact-table td {
     padding: 0.45rem 0.6rem;
     line-height: 1.2;
 	font-size: 0.85rem;
+}
+/* add horizontal scroll bar to table*/
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
