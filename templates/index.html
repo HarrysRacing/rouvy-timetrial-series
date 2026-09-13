@@ -91,14 +91,21 @@
 		        <th>Location</th>
 		        <th>Distance(kms)</th>
 		        <th>Ascent(m)</th>
+				<th>Status</th>
              </tr>
              {% for item in stage_tbl %}  
              <tr class="{{ item[9] }}">
-                <td>    
-			       <a href="{{ url_for('rouvy_races', stageId=item[7], stageName=item[0]) }}" class="links"> 
-				     {{ item[0] }} 
-				   </a>
-			    </td>
+                <td>
+                   {% if item[9] != "Scheduled" %}
+                      <a href="{{ url_for('stage_results', stageId=item[7], stageName=item[0]) }}" class="links">
+                        {{ item[0] }}
+                      </a>
+                   {% else %}
+                      <a href="{{ url_for('rouvy_races', stageId=item[7], stageName=item[0]) }}" class="links">
+                        {{ item[0] }}
+                      </a>
+                   {% endif %}
+                </td>
 			    <td>    
                    <a href="https://riders.rouvy.com/route/{{ item[8] }}"
                       target="_blank"
@@ -112,7 +119,8 @@
 	            <td>{{item[3]}}</td>       
 	            <td>{{item[4]}}</td>       
 	            <td>{{item[5]}}</td>
-	            <td>{{item[6]}}</td>       
+	            <td>{{item[6]}}</td> 
+                <td>{{item[9]}}</td>				
              </tr>
              {% endfor %}
 	         </table>
@@ -124,7 +132,7 @@
             <h3>GC Standings</h3>
           </header>
           <p>
-            Current Top Ten GC Standings (where available) :
+            Current Top Ten GC Standings :
           </p>
 		  <div class="table-wrapper">
 		     <table  class="compact-table">
@@ -154,7 +162,7 @@
 
         <article>		
 		  <ul class="actions">
-		     <li><a href="{{ url_for('terms') }}" class="button">Current GC (Full)</a></li>
+		     <li><a href="{{ url_for('gc') }}" class="button">Current GC (Full)</a></li>
 		     <li><a href="{{ url_for('stages') }}" class="button">Stages</a></li>
 		     <li><a href="{{ url_for('terms') }}" class="button">Upcoming Races</a></li>
              <li><a href="{{ url_for('participants') }}" class="button">Riders List</a></li>
@@ -171,7 +179,7 @@
         <h3>Legal</h3>
         <p style="text-align: left;">
           Harrys Racing Series is an independent community project
-		  and utilizing data accessed via the ROUVY API.
+		  utilizing data accessed via the ROUVY API.
         </p>
       </section>
 	  

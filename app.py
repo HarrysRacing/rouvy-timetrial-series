@@ -2,10 +2,10 @@
 from flask import Flask, render_template, redirect, request, logging
 
 #import datetime functions
-from datetime import datetime
+from datetime import datetime, timedelta
 
 #import function to retrieve active series data
-from services.db_utils import get_points_list, get_participants_list, get_races_list, get_active_series, get_stages_info, get_stage_results, get_top_ten_gc_info, save_rider_auth, DatabaseError
+from services.db_utils import get_points_list, get_participants_list, get_races_list, get_active_series, get_stages_info, get_stage_results, get_full_gc_info, get_top_ten_gc_info, save_rider_auth, DatabaseError
 from services.rouvy_oauth import get_oauth_url, get_token, RouvyOAuthError
 from services.rouvy_api import get_rouvy_rider,  RouvyAPIError
 
@@ -59,6 +59,14 @@ def about():
 
 #       return render_template("registration_error.html")
 
+@app.route("/gc")
+def gc():
+    series_info = get_active_series()
+    
+    gc_info = get_full_gc_info(series_info[0])
+    
+    return render_template("gc.html",series_name=series_info[1], counting_stages=series_info[4], gc_tbl=gc_info)
+
 @app.route("/guide")
 def guide():
     return render_template("guide.html")
@@ -98,7 +106,15 @@ def home():
          
          #mark stage as "complete" or "active"
          stage_end = stageE_dt.date()
-         status = "complete" if stage_end < today else "active"
+         stage_start = stageS_dt.date()        
+         
+         # status can be "Complete", "In-progress","Scheduled"
+         if stage_end < today:
+           status = "Complete"
+         elif stage_start <= today:
+           status = "In-progress"
+         else:
+           status = "Scheduled"
 
          li.append(status)
          
@@ -197,9 +213,16 @@ def stages():
          
          today = datetime.now().date()
          
-         #mark stage as "complete" or "active"
          stage_end = stageE_dt.date()
-         status = "complete" if stage_end < today else "active"
+         stage_start = stageS_dt.date()
+         
+         # status can be "Complete", "In-progress","Scheduled"
+         if stage_end < today:
+           status = "Complete"
+         elif stage_start <= today:
+           status = "In-progress"
+         else:
+           status = "Scheduled"
 
          li.append(status)
          
@@ -219,8 +242,30 @@ def stage_results():
     series_info = get_active_series()
     
     stage_results = get_stage_results(stageId)
+    
+    stage_list = []
+    
+    for row in stage_results: 
+       
+       li = list(row)
+       
+       total_seconds = int(row[2])
+
+       hours, remainder = divmod(total_seconds, 3600)
+       minutes, seconds = divmod(remainder, 60)
+
+       if hours > 0:
+          time_str = f"{hours}:{minutes:02d}:{seconds:02d}"
+       else:
+          time_str = f"{minutes}:{seconds:02d}"
+       
+       li[2] = time_str
+
+       row = tuple(li)
+         
+       stage_list.append(row)
    
-    return render_template("stage_results.html", series_name=series_info[1], stage_name=stageName, results_tbl=stage_results)
+    return render_template("stage_results.html", series_name=series_info[1], stage_name=stageName, results_tbl=stage_list)
  
 
 @app.route("/terms")

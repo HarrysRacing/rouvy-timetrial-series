@@ -25,37 +25,45 @@
     <p><br>
       Races currently scheduled for stage <i><strong>{{stage_name}}</strong></i>  of <i><strong>{{series_name}}</strong></i> are as follows:
     </p>
-    <table  class="compact-table">
-      <tr>
-         <th>ROUVY Race Name</th>
-         <th>Day</th>
-         <th>Date</th>
-         <th>Time</th>
-      </tr>
+    {% if races_tbl %}
+	  <div class="table-wrapper">
+       <table  class="compact-table">
+         <tr>
+            <th>ROUVY Race Name</th>
+            <th>Day</th>
+            <th>Date</th>
+            <th>Time</th>
+         </tr>
 
-      {% for item in races_tbl %}
-      <tr class="race-row"
-          data-utc="{{ item[2].isoformat() }}">
+         {% for item in races_tbl %}
+         <tr class="race-row"
+             data-utc="{{ item[2].isoformat() }}">
 
-        <td>
-           <a href="https://riders.rouvy.com/event/{{ item[1] }}"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="links">
-               {{ item[0] }}
-               <i class="icon solid fa-external-link-alt"></i>
-           </a>
-        </td>
+           <td>
+              <a href="https://riders.rouvy.com/event/{{ item[1] }}"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 class="links">
+                  {{ item[0] }}
+                  <i class="icon solid fa-external-link-alt"></i>
+              </a>
+           </td>
 
-        <td class="race-day"></td>
-        <td class="race-date"></td>
-        <td class="race-time"></td>
+           <td class="race-day"></td>
+           <td class="race-date"></td>
+           <td class="race-time"></td>
 
-      </tr>
-      {% endfor %}
+         </tr>
+         {% endfor %}
 
-    </table>
-	<p> Race times are displayed in your local time zone. </p>
+       </table>
+	   <p> Race times are displayed in your local time zone. </p>
+	  </div>
+	{% else %}
+	  <p>
+	  <strong>There are no races currently scheduled for this stage.</strong>
+	  </p>
+	 {% endif %} 	
 	
     <p><strong><a href="{{ url_for('home') }}" class="links">Go to Home page</a></strong></p>
 

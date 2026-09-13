@@ -111,11 +111,11 @@
 
 /* define colours for Complete and Active stages shown on Home page
 */
-.complete {
+.Complete {
     color: navy;
 }
 
-.active {
+.In-progress {
     color: green;
 }
 	

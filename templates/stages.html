@@ -40,7 +40,7 @@
           {% for item in stage_tbl %}  
           <tr class="{{ item[9] }}">
              <td>
-                {% if item[9] == "complete" %}
+                {% if item[9] != "Scheduled" %}
                    <a href="{{ url_for('stage_results', stageId=item[7], stageName=item[0]) }}" class="links">
                      {{ item[0] }}
                    </a>

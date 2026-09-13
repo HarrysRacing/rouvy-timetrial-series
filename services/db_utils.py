@@ -263,7 +263,7 @@ def get_admin():
 def get_full_gc_info(series_id):
    with sqlite3.connect(DB_PATH) as conn:
       cur = conn.cursor()
-      query = ('SELECT G.Position, R.UserName, R.Gender, N.Nationality, A.Label, G.CountingStages, G.Points '
+      query = ('SELECT G.Position, R.UserName, R.Gender, N.Nationality, A.StartAge || "-" || A.EndAge, G.CountingStages, G.Points '
                'FROM GC AS G, Rider AS R, AgeGroup AS A, Nationality AS N '
                'WHERE G.SeriesId = ? '
                'AND R.ID = G.RiderId '
@@ -283,11 +283,12 @@ def get_participants_list():
    with sqlite3.connect(DB_PATH) as conn:
       cur = conn.cursor()    
     
-      query = ('SELECT R.UserName, R.Gender, A.StartAge || "-" || A.EndAge, R.Nationality '
-               'FROM Rider AS R, AgeGroup AS A, Participant AS P '
+      query = ('SELECT R.UserName, R.Gender, A.StartAge || "-" || A.EndAge, N.Nationality '
+               'FROM Rider AS R, AgeGroup AS A, Participant AS P, Nationality AS N '
                'WHERE P.SeriesId = ? '
                'AND R.Id = P.RiderId '
                'AND A.Id = R.AgeGroupId '
+               'AND R.Nationality = N.CountryCode '
                'ORDER BY R.UserName;'
                )
 
@@ -336,14 +337,14 @@ def get_stage_results(stage_id):
    with sqlite3.connect(DB_PATH) as conn:
       cur = conn.cursor() 
 
-      query = ('SELECT S.Position, R.UserName, S.FinishTime, R.Gender, R.Nationality, A.StartAge || "-" || A.EndAge, S.AvgPower, ROUND((S.AvgPower/S.Weight),2), S.Points '
-               'FROM StageResult AS S, Rider AS R, AgeGroup AS A '
+      query = ('SELECT S.Position, R.UserName, S.FinishTime, R.Gender, N.Nationality, A.StartAge || "-" || A.EndAge, S.AvgPower, ROUND((S.AvgPower/S.Weight),2), S.Points '
+               'FROM StageResult AS S, Rider AS R, AgeGroup AS A, Nationality AS N '
                'WHERE S.StageId = ? '
                'AND R.Id = S.RiderId '
                'AND A.ID = R.AgeGroupId '
+               'AND R.Nationality = N.CountryCode '
                'ORDER BY S.Position;'               
                )
-      print('query: ',query)
                
       cur.execute(query,(stage_id,))
       results = cur.fetchall()
