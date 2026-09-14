@@ -96,12 +96,16 @@
              {% for item in stage_tbl %}  
              <tr class="{{ item[9] }}">
                 <td>
-                   {% if item[9] != "Scheduled" %}
+                   {% if item[9] == "Complete" %}
                       <a href="{{ url_for('stage_results', stageId=item[7], stageName=item[0]) }}" class="links">
                         {{ item[0] }}
                       </a>
+				   {% elif item[9] == "In-progress" %}
+                      <a href="{{ url_for('stage_results_races', stageId=item[7], stageName=item[0]) }}" class="links">
+                        {{ item[0] }}
+                      </a>
                    {% else %}
-                      <a href="{{ url_for('rouvy_races', stageId=item[7], stageName=item[0]) }}" class="links">
+                      <a href="{{ url_for('stage_races', stageId=item[7], stageName=item[0]) }}" class="links">
                         {{ item[0] }}
                       </a>
                    {% endif %}
@@ -164,7 +168,7 @@
 		  <ul class="actions">
 		     <li><a href="{{ url_for('gc') }}" class="button">Current GC (Full)</a></li>
 		     <li><a href="{{ url_for('stages') }}" class="button">Stages</a></li>
-		     <li><a href="{{ url_for('terms') }}" class="button">Upcoming Races</a></li>
+		     <li><a href="{{ url_for('all_races') }}" class="button">Scheduled Races</a></li>
              <li><a href="{{ url_for('participants') }}" class="button">Riders List</a></li>
           </ul>
         </article>
@@ -187,7 +191,7 @@
         <h3>Contact</h3>
         <p style="text-align: left;">
           For project enquiries
-		  please contact <i>Harry</i> at:<br> 
+		  please contact:<br> 
           harrysracing@altmail.kr
         </p>
       </section>

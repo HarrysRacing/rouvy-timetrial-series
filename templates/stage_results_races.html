@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Stage Results</title>
+  <title>Stage Results and Races</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}"  />
 </head>
@@ -19,11 +19,11 @@
     <img src="{{ url_for('static', filename='images/HRlogo.png') }}" 
          alt="Harrys Racing Logo"/>
 
-          <h1>Stage Results</h1>
+          <h1>Stage Results and Scheduled Races</h1>
        </div>
 
     <p><br>
-      Results for <i><strong>{{stage_name}}</strong></i> stage in <i><strong>{{series_name}}</strong></i> :
+      <i><strong>{{stage_name}}</strong></i> stage in <i><strong>{{series_name}}</strong></i> is <strong>in-progress</strong>:
     </p>
     {% if results_tbl %}
        <div class="table-wrapper">
@@ -59,6 +59,49 @@
 	   <strong>There are no results available for this stage at this time.</strong>
 	   </p>
 	 {% endif %}  
+	 
+	{% if races_tbl %} 
+	    <p><br>
+      Other races scheduled for this stage:
+    </p>
+	  <div class="table-wrapper">
+       <table  class="compact-table">
+         <tr>
+            <th>ROUVY Race Name</th>
+            <th>Day</th>
+            <th>Date</th>
+            <th>Time</th>
+         </tr>
+
+         {% for item in races_tbl %}
+         <tr class="race-row"
+             data-utc="{{ item[2].isoformat() }}">
+
+           <td>
+              <a href="https://riders.rouvy.com/event/{{ item[1] }}"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 class="links">
+                  {{ item[0] }}
+                  <i class="icon solid fa-external-link-alt"></i>
+              </a>
+           </td>
+
+           <td class="race-day"></td>
+           <td class="race-date"></td>
+           <td class="race-time"></td>
+
+         </tr>
+         {% endfor %}
+
+       </table>
+	   <p> Race times are displayed in your local time zone. </p>
+	  </div>
+	{% else %}
+	  <p>
+	  <strong>There are no other races currently scheduled for this stage.</strong>
+	  </p>
+	 {% endif %} 	
      <p><strong><a href="{{ url_for('home') }}" class="links">Go to Home page</a></strong></p>
 
       </section>

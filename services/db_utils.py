@@ -309,11 +309,22 @@ def get_races_list(stageId):
    with sqlite3.connect(DB_PATH) as conn:
       cur = conn.cursor()    
     
-      query = ('SELECT Name, EventId, StartTime '
-               'FROM Race '
-               'WHERE StageId = ?;')
+      if stageId != "ALL":         
+         query = ('SELECT Name, EventId, StartTime '
+                  'FROM Race '
+                  'WHERE StageId = ?;')
 
-      cur.execute(query,(stageId,))
+         cur.execute(query,(stageId,))
+      else:          
+         series_info = get_active_series()
+
+         query = ('SELECT  R.Name, EventId, StartTime, StageId '
+                  'FROM Race AS R, Stage AS S '
+                  'WHERE S.Id = R.StageId '
+                  'AND S.SeriesId = ?;')                  
+
+         cur.execute(query,(series_info[0],))
+         
       results = cur.fetchall()
    return results 
  
@@ -326,8 +337,8 @@ def get_stages_info():
                'WHERE SeriesId IN (SELECT Id '
                '                    FROM Series '
                '                    WHERE StartDate <= datetime("now") '
-               '                    AND EndDate > datetime("now") '
-               '                    );' 
+               '                    AND EndDate > datetime("now")) '
+               'ORDER BY Id;' 
                ) 
       cur.execute(query)
       results = cur.fetchall()

@@ -25,6 +25,71 @@ app = Flask(__name__)
 def about():
     return render_template("about.html") 
 
+@app.route("/all_races")
+def all_races():
+
+    # stageId and stageName passed in as commandline arguments in index.html, when calling rouvy_races.html
+    stageId = request.args.get("stageId")
+    stageName = request.args.get("stageName")
+
+    series_info = get_active_series()
+ 
+    stages_info = get_stages_info()
+    
+    stage_list = []
+    
+    for row in stages_info:
+         
+         # Parse the ISO 8601 date
+         stageS_dt = datetime.fromisoformat(row[2])
+         stageE_dt = datetime.fromisoformat(row[3])
+    
+         li = list(row)
+         
+         # Format to dd-mmm-yyyy
+         li[2] = stageS_dt.strftime('%d-%b-%Y')
+         li[3] = stageE_dt.strftime('%d-%b-%Y')
+         
+         today = datetime.now().date()
+         
+         stage_end = stageE_dt.date()
+         stage_start = stageS_dt.date()
+         
+         # status can be "Complete", "In-progress","Scheduled"
+         if stage_end < today:
+           status = "Complete"
+         elif stage_start <= today:
+           status = "In-progress"
+         else:
+           status = "Scheduled"
+
+         li.append(status)
+         
+         row = tuple(li)
+         
+         stage_list.append(row)         
+    
+ 
+    races_info = get_races_list("ALL")
+    
+    races_list = []
+    
+    for row in races_info:
+         
+         # Parse the ISO 8601 date
+         start_dt = datetime.fromisoformat(row[2])
+    
+         li = list(row)
+         
+         # Format to dd-mmm-yyyy
+         li[2] = start_dt
+         
+         row = tuple(li)
+         
+         races_list.append(row)
+   
+    return render_template("all_races.html", series_name=series_info[1], stages_tbl=stage_list, races_tbl=races_list)
+
 #@app.route("/authorize")
 #def authorize():
 #    auth_url = get_oauth_url()
@@ -154,8 +219,8 @@ def privacy():
 #def register():
 #    return render_template("register.html") 
 
-@app.route("/rouvy_races")
-def rouvy_races():
+@app.route("/stage_races")
+def stage_races():
 
     # stageId and stageName passed in as commandline arguments in index.html, when calling rouvy_races.html
     stageId = request.args.get("stageId")
@@ -171,24 +236,17 @@ def rouvy_races():
          
          # Parse the ISO 8601 date
          start_dt = datetime.fromisoformat(row[2])
-
-        # date = start_dt.strftime("%d-%b-%Y")
-        # time = start_dt.strftime("%H:%M")     
-        # day = start_dt.strftime("%A")
     
          li = list(row)
          
          # Format to dd-mmm-yyyy
          li[2] = start_dt
-
-         #li.append(date)
-         #li.append(time)
          
          row = tuple(li)
          
          races_list.append(row)
    
-    return render_template("rouvy_races.html", series_name=series_info[1], stage_name=stageName, races_tbl=races_list)
+    return render_template("stage_races.html", series_name=series_info[1], stage_name=stageName, races_tbl=races_list)
 
 @app.route("/stages")
 def stages():
@@ -267,6 +325,59 @@ def stage_results():
    
     return render_template("stage_results.html", series_name=series_info[1], stage_name=stageName, results_tbl=stage_list)
  
+@app.route("/stage_results_races")
+def stage_results_races():
+
+    # stageId and stageName passed in as commandline arguments in index.html, when calling rouvy_races.html
+    stageId = request.args.get("stageId")
+    stageName = request.args.get("stageName")
+    
+    series_info = get_active_series()
+    
+    stage_results = get_stage_results(stageId)
+    
+    stage_list = []
+    
+    for row in stage_results: 
+       
+       li = list(row)
+       
+       total_seconds = int(row[2])
+
+       hours, remainder = divmod(total_seconds, 3600)
+       minutes, seconds = divmod(remainder, 60)
+
+       if hours > 0:
+          time_str = f"{hours}:{minutes:02d}:{seconds:02d}"
+       else:
+          time_str = f"{minutes}:{seconds:02d}"
+       
+       li[2] = time_str
+
+       row = tuple(li)
+         
+       stage_list.append(row)
+
+    # now get the races info
+    races_info = get_races_list(stageId)
+    
+    races_list = []
+    
+    for row in races_info:
+         
+         # Parse the ISO 8601 date
+         start_dt = datetime.fromisoformat(row[2])
+    
+         li = list(row)
+         
+         # Format to dd-mmm-yyyy
+         li[2] = start_dt
+         
+         row = tuple(li)
+         
+         races_list.append(row)
+   
+    return render_template("stage_results_races.html", series_name=series_info[1], stage_name=stageName, results_tbl=stage_list, races_tbl=races_list)
 
 @app.route("/terms")
 def terms():
