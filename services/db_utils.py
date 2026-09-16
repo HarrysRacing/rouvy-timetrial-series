@@ -44,8 +44,6 @@ def calc_gc():
          #sort gcPoints list in points order descending
          gcPoints.sort(key=lambda x:x[2],reverse=True)    
        
-         print('gcPoints from StageResults: ', gcPoints)
-       
          # stage, rider, points - find the riders and points for each rider 
        
          riders = []
@@ -56,8 +54,6 @@ def calc_gc():
          for x in range(l):
             if gcPoints[x][1] not in riders: 
                riders.append(gcPoints[x][1]) 
-       
-         print('Riders: ',riders)
        
          #l = len(riders)
        
@@ -107,8 +103,6 @@ def calc_gc():
                query = ('INSERT INTO GC(Points, Position, CountingStages, LastCalc, SeriesId, RiderId) '
                         'VALUES(?,0,?,?,?,?);'
                         )  
-
-               print('INSERT to GC Rider: ',rider,'with points: ',pts)
 
             cursor.execute(query,(pts,rider_stgs,nowTime,seriesId,rider))                       
  

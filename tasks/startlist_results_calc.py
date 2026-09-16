@@ -20,14 +20,17 @@ try:
 
   if activeSeries:
 
+     print('startlist_results_calc started at: ',datetime.now())
      # For the active Series, create or update the Startlist data (Rider and Participant tables)
     
      # get Admin RiderId
      adminRider = get_admin()
          
+     print('get access token... ',datetime.now())    
      #get Access Token
      accessToken = get_access_token(adminRider[0])
-         
+     
+     print('get stages info... ',datetime.now())
      #get list of stages for current Series  - SELECT Name, RouteName, date(StartDate), date(EndDate), Country, Distance, Ascent, Id, RouteId 
      stagesInfo = get_stages_info()
          
@@ -59,17 +62,23 @@ try:
 
            # Need to save rider info, where rider does not exist OR update age, username, weight, FTP, country 
            riderId = save_rider_participant(startList)
-                 
+     
+     print('update stage results... ',datetime.now())     
      # calculate the results for completed races and populate stageResults
      update_stage_results()
      
+     print('calc stages points... ',datetime.now())
      #calculate positions and points and update SearchResults and GC tables
      # (re)Calculate Position and Points in StageResult table for all StageIds
      calc_stage_points()
      
+     print('calc GC... ',datetime.now())
      #calculate and update GC table
      calc_gc()
-                       
+     
+     print('get startlist_results_calc - COMPLETE : ', datetime.now())
+  else:
+     print('No Active Series Found - startlist_results_calc terminating...')      
 
 except Exception as e:
     print('Error occurred -', e)
