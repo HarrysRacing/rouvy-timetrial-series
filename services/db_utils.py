@@ -4,11 +4,14 @@ from datetime import date, datetime, timedelta, timezone, UTC
 from services.rouvy_oauth import exchange_token 
 from services.rouvy_api import get_rouvy_race_start_list, get_rouvy_race_result
 
+
 import sqlite3
 
 EXPIRY_MARGIN = 60
 
 DB_PATH = Path(__file__).resolve().parent.parent / "database" / "harrysracing.db"
+
+FILE_PATH = Path(__file__).resolve().parent.parent / "database" / "oauth_token_data.txt"
 
 class DatabaseError(Exception):
    pass
@@ -180,7 +183,33 @@ def calc_stage_points():
    
    except sqlite3.Error as error:
       raise DatabaseError("Unable to update database with points/positions data in StageResult") from error   
-  
+
+def export_oauthkey_admin():  
+
+   try:
+    
+      with sqlite3.connect(DB_PATH) as conn:
+         cursor = conn.cursor()
+
+         query = ('SELECT AccessToken, RefreshToken, ExpiresAt '
+                  'FROM OAuthKey '
+                  'WHERE Id = 1;'
+                  )
+         
+         cursor.execute(query)         
+                 
+         oauthInfo = cursor.fetchone() 
+
+         lines = [oauthInfo[0]+'\n',oauthInfo[1]+'\n',oauthInfo[2]+'\n']
+      
+      
+         with open(FILE_PATH, "w", encoding="utf-8") as f:
+            f.writelines(lines)
+
+      return  
+   
+   except sqlite3.Error as error:
+      raise DatabaseError("Unable to export OAuthKey data for Admin rider to file") from error 
 
 def get_access_token(riderId):
     

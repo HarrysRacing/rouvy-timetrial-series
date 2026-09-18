@@ -8,7 +8,7 @@ from flask import Flask, redirect, request
 import webbrowser
 
 #import function to retrieve active series data
-from services.db_utils import save_rider_auth
+from services.db_utils import save_rider_auth, export_oauthkey_admin
 from services.rouvy_oauth import get_oauth_url, get_token
 from services.rouvy_api import get_rouvy_rider
 
@@ -40,7 +40,11 @@ def callback():
     save_rider_auth(
         token_data,
         rouvy_rider_profile
-    )
+        )
+        
+    #export OAuthKey data to file
+    export_oauthkey_admin()    
+
 
     return "ROUVY authorisation successful. You can close this browser window and exit the Flask process."
 

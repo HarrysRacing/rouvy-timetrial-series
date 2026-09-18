@@ -2,3 +2,5 @@
 __pycache__/
 *.pyc
 /database/harrysracing.db
+/database/oauth_token_data.txt
+/logs/startlist_results_calc.log
