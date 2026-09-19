@@ -139,7 +139,7 @@ def guide():
 @app.route("/")
 def home():
     series_info = get_active_series()
-    
+    print('si:',series_info)
     if series_info:
        #stages_info : Name, RouteName, StartDate, EndDate, Country, Distance, Ascent, Id, RouteId
        stages_info = get_stages_info()

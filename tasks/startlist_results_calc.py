@@ -35,7 +35,7 @@ try:
      stagesInfo = get_stages_info()
          
      for stage in stagesInfo:
-         
+                
         # get the list of scheduled races for the Series
         schedRaces = get_races_list(stage[7])
          
@@ -43,7 +43,7 @@ try:
         for race in schedRaces:
             
            eventId = race[1]
-         
+           
            # get the startlist data
            startList = get_rouvy_race_start_list(accessToken,eventId)
 

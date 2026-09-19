@@ -269,7 +269,7 @@ def get_access_token(riderId):
 def get_active_series():
    with sqlite3.connect(DB_PATH) as conn:
       cur = conn.cursor()
-      query = 'SELECT Id, Name, date(StartDate), date(EndDate), CountingStages FROM Series WHERE StartDate <= datetime("now") AND EndDate > datetime("now");'
+      query = 'SELECT Id, Name, date(StartDate), date(EndDate), CountingStages FROM Series WHERE julianday(StartDate) <= julianday("now") AND julianday(EndDate) > julianday("now");'
       cur.execute(query)
       seriesInfo = cur.fetchone()
    return seriesInfo
@@ -359,8 +359,8 @@ def get_stages_info():
                'FROM Stage '
                'WHERE SeriesId IN (SELECT Id '
                '                    FROM Series '
-               '                    WHERE StartDate <= datetime("now") '
-               '                    AND EndDate > datetime("now")) '
+               '                    WHERE julianday(StartDate) <= julianday("now") '
+               '                    AND julianday(EndDate) > julianday("now")) '
                'ORDER BY Id;' 
                ) 
       cur.execute(query)
