@@ -140,52 +140,62 @@ def guide():
 def home():
     series_info = get_active_series()
     
-    #stages_info : Name, RouteName, StartDate, EndDate, Country, Distance, Ascent, Id, RouteId
-    stages_info = get_stages_info()
+    if series_info:
+       #stages_info : Name, RouteName, StartDate, EndDate, Country, Distance, Ascent, Id, RouteId
+       stages_info = get_stages_info()
     
-    gc_info = get_top_ten_gc_info(series_info[0])
+       gc_info = get_top_ten_gc_info(series_info[0])
        
-    # Parse the ISO 8601 date
-    start_dt = datetime.fromisoformat(series_info[2])
-    end_dt = datetime.fromisoformat(series_info[3])
+       # Parse the ISO 8601 date
+       start_dt = datetime.fromisoformat(series_info[2])
+       end_dt = datetime.fromisoformat(series_info[3])
     
-    # Format to dd-mmm-yyyy
-    start_dt_fmt = start_dt.strftime('%d-%b-%Y')
-    end_dt_fmt = end_dt.strftime('%d-%b-%Y')
+       # Format to dd-mmm-yyyy
+       start_dt_fmt = start_dt.strftime('%d-%b-%Y')
+       end_dt_fmt = end_dt.strftime('%d-%b-%Y')
     
-    stage_list = []
+       stage_list = []
     
-    for row in stages_info:
+       for row in stages_info:
          
-         # Parse the ISO 8601 date
-         stageS_dt = datetime.fromisoformat(row[2])
-         stageE_dt = datetime.fromisoformat(row[3])
+          # Parse the ISO 8601 date
+          stageS_dt = datetime.fromisoformat(row[2])
+          stageE_dt = datetime.fromisoformat(row[3])
     
-         li = list(row)
+          li = list(row)
          
-         # Format to dd-mmm-yyyy
-         li[2] = stageS_dt.strftime('%d-%b-%Y')
-         li[3] = stageE_dt.strftime('%d-%b-%Y')
+          # Format to dd-mmm-yyyy
+          li[2] = stageS_dt.strftime('%d-%b-%Y')
+          li[3] = stageE_dt.strftime('%d-%b-%Y')
          
-         today = datetime.now().date()
+          today = datetime.now().date()
          
-         #mark stage as "complete" or "active"
-         stage_end = stageE_dt.date()
-         stage_start = stageS_dt.date()        
+          #mark stage as "complete" or "active"
+          stage_end = stageE_dt.date()
+          stage_start = stageS_dt.date()        
          
-         # status can be "Complete", "In-progress","Scheduled"
-         if stage_end < today:
-           status = "Complete"
-         elif stage_start <= today:
-           status = "In-progress"
-         else:
-           status = "Scheduled"
+          # status can be "Complete", "In-progress","Scheduled"
+          if stage_end < today:
+             status = "Complete"
+          elif stage_start <= today:
+             status = "In-progress"
+          else:
+             status = "Scheduled"
 
-         li.append(status)
+          li.append(status)
          
-         row = tuple(li)
+          row = tuple(li)
          
-         stage_list.append(row)         
+          stage_list.append(row)         
+    
+    else:
+        series_info = [1,"None",0,0,0]
+        start_dt_fmt = datetime.now().date()
+        end_dt_fmt = datetime.now().date()
+        stage_list = []
+        gc_info = []
+        
+        
     
     return render_template("index.html", name=series_info[1], start_date=start_dt_fmt,end_date=end_dt_fmt,
                             counting_stages=series_info[4], stage_tbl=stage_list, gc_tbl=gc_info)

@@ -163,7 +163,8 @@
 	         </table>
 		  </div><br>
         </article>
-
+        
+		{% if name != "None" %}
         <article>		
 		  <ul class="actions">
 		     <li><a href="{{ url_for('gc') }}" class="button">Current GC (Full)</a></li>
@@ -172,7 +173,7 @@
              <li><a href="{{ url_for('participants') }}" class="button">Riders List</a></li>
           </ul>
         </article>
-
+        {% endif %}
       </section>
 
     </div>
