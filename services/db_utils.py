@@ -679,7 +679,7 @@ def save_stage_route_data(routeId, routeName, country, distance, ascent, maxSlop
          
          stageFound = cursor.fetchone()                     
          
-         if stageFound[0] and not stageFound[1]:
+         if stageFound and not stageFound[1]:
             # update route data for Stage 
             
             query = ('UPDATE Stage '
@@ -692,7 +692,7 @@ def save_stage_route_data(routeId, routeName, country, distance, ascent, maxSlop
                      )
              
             cursor.execute(query,(routeName,country,distance,ascent,maxSlope,stageFound[0]))         
-         elif not stageFound[0]:
+         elif not stageFound:
               print('No Stage found for this race.')
                            
       return stageFound[0]
