@@ -695,7 +695,7 @@ def save_stage_route_data(routeId, routeName, country, distance, ascent, maxSlop
          elif not stageFound:
               print('No Stage found for this race.')
                            
-      return stageFound[0]
+      return stageFound
 
    except sqlite3.Error as error:
       raise DatabaseError("Unable to save stage route data") from error

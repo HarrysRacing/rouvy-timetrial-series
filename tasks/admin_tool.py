@@ -162,7 +162,8 @@ try:
             stageId = save_stage_route_data(routeId, routeName, country, distance, ascent, maxSlope, raceStartUTC)
          
             if stageId:
-               save_race_data(stageId, col_EventId, raceStartUTC, raceName) 
+              
+               save_race_data(stageId[0], col_EventId, raceStartUTC, raceName) 
                
 except sqlite3.Error as error:
    raise DatabaseError("Unable to save Series/Stage data from Excel") from error
