@@ -312,7 +312,7 @@ def get_participants_list():
                'AND R.Id = P.RiderId '
                'AND A.Id = R.AgeGroupId '
                'AND R.Nationality = N.CountryCode '
-               'ORDER BY R.UserName;'
+               'ORDER BY N.Nationality;'
                )
 
       cur.execute(query,(series_info[0],))
@@ -682,6 +682,11 @@ def save_stage_route_data(routeId, routeName, country, distance, ascent, maxSlop
          if stageFound and not stageFound[1]:
             # update route data for Stage 
             
+            query = ('SELECT Country FROM Nationality WHERE CountryCode = ?;')
+            cursor.execute(query,(country,))
+             
+            countryName = cursor.fetchone()
+            
             query = ('UPDATE Stage '
                      'SET RouteName = ?, '            
                      'Country = ?, '
@@ -691,7 +696,7 @@ def save_stage_route_data(routeId, routeName, country, distance, ascent, maxSlop
                      'WHERE Id = ?;'
                      )
              
-            cursor.execute(query,(routeName,country,distance,ascent,maxSlope,stageFound[0]))         
+            cursor.execute(query,(routeName,countryName[0],distance,ascent,maxSlope,stageFound[0]))         
          elif not stageFound:
               print('No Stage found for this race.')
                            
