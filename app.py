@@ -139,7 +139,7 @@ def guide():
 @app.route("/")
 def home():
     series_info = get_active_series()
-    print('si:',series_info)
+
     if series_info:
        #stages_info : Name, RouteName, StartDate, EndDate, Country, Distance, Ascent, Id, RouteId
        stages_info = get_stages_info()
@@ -255,7 +255,7 @@ def stage_races():
          row = tuple(li)
          
          races_list.append(row)
-   
+  
     return render_template("stage_races.html", series_name=series_info[1], stage_name=stageName, races_tbl=races_list)
 
 @app.route("/stages")
