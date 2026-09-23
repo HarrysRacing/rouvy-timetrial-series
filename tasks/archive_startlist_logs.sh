@@ -10,7 +10,9 @@ mkdir -p "$ARCHIVE_DIR"
 # 1. Archive today's log
 if [ -f "$LOG_FILE" ]; then
  STAMP=$(date +"%Y%m%d_%H%M%S")
- mv $LOG_FILE $ARCHIVE_DIR/startlist_results_calc_$STAMP.log"
+ mv "$LOG_FILE" "$ARCHIVE_DIR/startlist_results_calc_$STAMP.log"
+else
+ echo "$(date): $LOG_FILE not found — skipping" >&2
 fi
 
 # 2. Remove the oldest archive once we exceed KEEP
