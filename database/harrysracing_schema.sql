@@ -317,6 +317,7 @@ VALUES
     ('MZ','Mozambique', 'Mozambican'),
     ('MM','Mayanma', 'Burmese'),
     ('NA','Nambia', 'Namibian'),
+	('NF','Norfolk Island','Norfuk Ailener'),
     ('NR','Nauru', 'Nauruan'),
     ('NP','Nepal', 'Nepalese'),
     ('NL','Netherlands', 'Dutch'),

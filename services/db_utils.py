@@ -878,8 +878,6 @@ def update_stage_results():
                                         'VALUES (?,?,?,"-","ZW",200,100) '
                                         'RETURNING Id AS RiderId;')
 
-                               print('rider insert: ',query,' userid and name : ',userId,' - ',name)
-
                                cursor.execute(query,(userId,name,ageGroupId[0]))
             
                                riderId = cursor.fetchone()

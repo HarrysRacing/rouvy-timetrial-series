@@ -145,6 +145,8 @@ def home():
        stages_info = get_stages_info()
     
        gc_info = get_top_ten_gc_info(series_info[0])
+
+       print('gc top ten: ',gc_info)
        
        # Parse the ISO 8601 date
        start_dt = datetime.fromisoformat(series_info[2])
