@@ -833,7 +833,78 @@ def update_stage_results():
                                           )
 
                                  cursor.execute(query,(stageId,riderId,riderWeight,avgPower,finishTimeNew,stageId,eventId,nowTime)) 
-       
+
+                           # else the rider was not in the startlist - hopefully does not happen now, but, need to add what we can
+                           else:
+                              
+                             #what we know                        
+                               # userId = rider["userId"]
+                               #routeId = rider["routeId"]
+                               #distance = rider["distanceMeters"]
+                               #eventId = rider["eventId"]
+                               #finishTimeNew = rider["eventFinishTimeSeconds"]
+                               #avgPower = rider["aggregates"]["powerWatts"]["avg"]
+ 
+                               finished = False
+                               count = 0
+                               base_name = "Unknown"
+                               name = base_name
+                               while not finished:
+
+                                  query = ('SELECT * FROM Rider WHERE UserName = ?;')
+
+                                  cursor.execute(query,(name,))
+
+                                  if cursor.fetchone():
+                                     count = count + 1
+                                     name = base_name + str(count)                                    
+                                  else:
+                                     finished = True 
+     
+                               query = ('SELECT MAX(Id) FROM AgeGroup;')
+                                  
+                               cursor.execute(query,)
+             
+                               ageGroupId = cursor.fetchone()
+     
+                               query = ('INSERT INTO Rider (	'
+                                        'UserId, '
+                                        'UserName, '
+                                        'AgeGroupId, '
+                                        'Gender, ' 
+                                        'Nationality, '
+                                        'CurrentWeight, '
+                                        'CurrentFTP) '
+                                        'VALUES (?,?,?,"-","ZW",200,100) '
+                                        'RETURNING Id AS RiderId;')
+
+                               print('rider insert: ',query,' userid and name : ',userId,' - ',name)
+
+                               cursor.execute(query,(userId,name,ageGroupId[0]))
+            
+                               riderId = cursor.fetchone()
+                               
+                               seriesInfo = get_active_series()
+                               
+                               #save rider_participant - can't use function as transaction already open so locks db
+                               query = ('INSERT INTO Participant '
+                                        '(SeriesId, RiderId) '
+                                        'VALUES (?,?);'
+                                        ) 
+                  
+                               cursor.execute(query,(seriesInfo[0],riderId[0]))
+                               
+                               
+                               nowTime = datetime.now(UTC).isoformat().replace("+00:00", "Z")
+                               
+                               query = ('INSERT INTO StageResult '
+                                        '(StageId, RiderId, Weight, AvgPower, FinishTime, RaceId, LastCalc) '
+                                        'VALUES(?,?,?,?,?,(SELECT Id FROM Race WHERE StageId = ? AND EventId = ?),?);'
+                                        )
+
+                               cursor.execute(query,(stageId,riderId[0],riderWeight,avgPower,finishTimeNew,stageId,eventId,nowTime)) 
+
+                               
       return  
    
    except sqlite3.Error as error:
