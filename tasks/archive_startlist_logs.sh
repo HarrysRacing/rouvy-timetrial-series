@@ -10,12 +10,12 @@ mkdir -p "$ARCHIVE_DIR"
 # 1. Archive today's log
 if [ -f "$LOG_FILE" ]; then
  STAMP=$(date +"%Y%m%d_%H%M%S")
- mv "LOG_FILE" "ARCHIVE_DIR/startlist_results_calc_${STAMP}.log"
+ mv $LOG_FILE $ARCHIVE_DIR/startlist_results_calc_$STAMP.log"
 fi
 
 # 2. Remove the oldest archive once we exceed KEEP
 cd "$ARCHIVE_DIR" || exit 1
-while [ "(ls -1 startlist_results_calc_*.log 2>/dev/null | wc -l)" -gt "KEEP" ]; do
- oldest=$(ls -1 startlist_results_calc_*.log | head -n 1) # fixed-width timestamps sort chronologically
+while [ "$(ls -1 startlist_results_calc_*.log 2>/dev/null | wc -l)" -gt "$KEEP" ]; do
+ oldest=$(ls -1 startlist_results_calc_*.log | head -n 1)
  rm -f "$oldest"
 done
