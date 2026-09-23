@@ -608,8 +608,7 @@ def save_rider_participant(riderList):
            ftp = rider["ftp"]
            weight = rider["weight"]
            country = rider["countryCode"]
-        
- 
+         
            # Check if rider already exists in Rider? 
     
            query = ('SELECT Id FROM Rider WHERE UserId = ?;')
@@ -786,50 +785,54 @@ def update_stage_results():
 
                         riderInfo = cursor.fetchone()
 
-                        riderId = riderInfo[0]
-                        riderWeight = riderInfo[1]                        
+                        # did this rider complete the race? - if not I don't care about them.
+                        if distance >= stageDistance:                        
+                        
+                           # Did we get their info from the Startlist?
+                           if riderInfo:
+                              riderId = riderInfo[0]
+                              riderWeight = riderInfo[1]                        
 
-                        # did this rider complete the race ?
-                        if distance >= stageDistance:
-                            #yes the Rider completed the race - check if the Rider already has a result
+
+                              #yes the Rider completed the race - check if the Rider already has a result
                             
-                            query = ('SELECT FinishTime '
-                                     'FROM StageResult '
-                                     'WHERE RiderId = ? '
-                                     'AND StageId = ?;'
-                                     )
+                              query = ('SELECT FinishTime '
+                                       'FROM StageResult '
+                                       'WHERE RiderId = ? '
+                                       'AND StageId = ?;'
+                                       )
                                      
-                            cursor.execute(query,(riderId,stageId))
+                              cursor.execute(query,(riderId,stageId))
                             
-                            finishTimeOld = cursor.fetchone()
+                              finishTimeOld = cursor.fetchone()
                             
-                            nowTime = datetime.now(UTC).isoformat().replace("+00:00", "Z")
+                              nowTime = datetime.now(UTC).isoformat().replace("+00:00", "Z")
                            
-                            if finishTimeOld and (finishTimeOld[0] > finishTimeNew):
-                               # if the Rider has a stageResult but it is slower than the new result 
-                               # then save the new result
+                              if finishTimeOld and (finishTimeOld[0] > finishTimeNew):
+                                 # if the Rider has a stageResult but it is slower than the new result 
+                                 # then save the new result
  
  
-                               query = ('UPDATE StageResult '
-                                        'SET Weight = ?, '
-                                        '    AvgPower = ?, '
-                                        '    FinishTime = ?, '
-                                        '    RaceId = (SELECT Id FROM Race WHERE StageId = ? AND EventId = ?),'
-                                        '    LastCalc = ? '                                       
-                                        'WHERE StageId = ? '
-                                        'AND RiderId = ?; '
-                                        )
+                                 query = ('UPDATE StageResult '
+                                          'SET Weight = ?, '
+                                          '    AvgPower = ?, '
+                                          '    FinishTime = ?, '
+                                          '    RaceId = (SELECT Id FROM Race WHERE StageId = ? AND EventId = ?),'
+                                          '    LastCalc = ? '                                       
+                                          'WHERE StageId = ? '
+                                          'AND RiderId = ?; '
+                                          )
                                          
-                               cursor.execute(query,(riderWeight,avgPower,finishTimeNew,stageId,eventId,nowTime,stageId,riderId))                                               
+                                 cursor.execute(query,(riderWeight,avgPower,finishTimeNew,stageId,eventId,nowTime,stageId,riderId))                                               
                                 
-                            elif not finishTimeOld: # no record in StageResult for Stage/Rider so create one
+                              elif not finishTimeOld: # no record in StageResult for Stage/Rider so create one
                                 
-                               query = ('INSERT INTO StageResult '
-                                        '(StageId, RiderId, Weight, AvgPower, FinishTime, RaceId, LastCalc) '
-                                        'VALUES(?,?,?,?,?,(SELECT Id FROM Race WHERE StageId = ? AND EventId = ?),?);'
-                                        )
+                                 query = ('INSERT INTO StageResult '
+                                          '(StageId, RiderId, Weight, AvgPower, FinishTime, RaceId, LastCalc) '
+                                          'VALUES(?,?,?,?,?,(SELECT Id FROM Race WHERE StageId = ? AND EventId = ?),?);'
+                                          )
 
-                               cursor.execute(query,(stageId,riderId,riderWeight,avgPower,finishTimeNew,stageId,eventId,nowTime)) 
+                                 cursor.execute(query,(stageId,riderId,riderWeight,avgPower,finishTimeNew,stageId,eventId,nowTime)) 
        
       return  
    
