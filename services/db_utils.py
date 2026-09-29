@@ -7,7 +7,7 @@ from services.rouvy_api import get_rouvy_race_start_list, get_rouvy_race_result
 
 import sqlite3
 
-EXPIRY_MARGIN = 60
+EXPIRY_MARGIN = 600   #10 minutes
 
 DB_PATH = Path(__file__).resolve().parent.parent / "database" / "harrysracing.db"
 
