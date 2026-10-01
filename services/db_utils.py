@@ -160,13 +160,22 @@ def calc_stage_points():
             if stageResultIds:
                 
                ln = len(stageResultIds)
+               
+               #print('ln :',ln)
+               
                for y in range(ln):
+                   
+                  #print('y :',y) 
+                   
                   if y >= 50:
                      pts_Pos = 50  #50 rows in Points table, all positions after 50 get the same points as position 50.
                   else:
                      pts_Pos = y+1                 
              
                   position = y+1
+             
+                  #print('pts_pos & position :', pts_Pos, ' - ',position)
+             
              
                   query = ('UPDATE StageResult '
                            'SET Position = ?, '
@@ -176,8 +185,11 @@ def calc_stage_points():
                            'WHERE StageResult.Id = ? '
                            'AND sp.Position = ?;'
                            )
+                  #print('pts_pos, stageResultsID, position: ',pts_Pos, stageResultIds[y][0], position)
               
-                  cursor.execute(query, (pts_Pos, stageResultIds[y][0], position))
+                  #print('query :',query)
+              
+                  cursor.execute(query, (position, stageResultIds[y][0], pts_Pos))
             
       return  
    
@@ -881,6 +893,8 @@ def update_stage_results():
                                cursor.execute(query,(userId,name,ageGroupId[0]))
             
                                riderId = cursor.fetchone()
+                               
+                               riderWeight = 200 #placeholder weight
                                
                                seriesInfo = get_active_series()
                                
