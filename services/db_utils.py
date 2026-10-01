@@ -784,8 +784,22 @@ def update_stage_results():
                         routeId = rider["routeId"]
                         distance = rider["distanceMeters"]
                         eventId = rider["eventId"]
-                        finishTimeNew = rider["eventFinishTimeSeconds"]
-                        avgPower = rider["aggregates"]["powerWatts"]["avg"]
+                        
+                        finishTimeNew = 0
+                        avgPower = 0
+                        
+                        #print('***** DEBUG ******')
+                        #print('UserId :',rider["userId"])
+                        #print('routeid :',rider["routeId"])
+                        #print('eventid :',rider["eventId"])
+                        #print('distance :',rider["distanceMeters"])
+                        #print('FinishTime :',rider["eventFinishTimeSeconds"])                        
+                        #print('Power :',rider["aggregates"]["powerWatts"])  
+                        
+                        if rider["eventFinishTimeSeconds"]:
+                           finishTimeNew = rider["eventFinishTimeSeconds"]                        
+                           avgPower = rider["aggregates"]["powerWatts"]["avg"]
+                                                      
 
                         #get Rider data for userId
                         query = ('SELECT Id, CurrentWeight '
