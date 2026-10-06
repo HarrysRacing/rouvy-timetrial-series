@@ -318,7 +318,7 @@ def get_participants_list():
    with sqlite3.connect(DB_PATH) as conn:
       cur = conn.cursor()    
     
-      query = ('SELECT R.UserName, R.Gender, A.StartAge || "-" || A.EndAge, N.Nationality '
+      query = ('SELECT ROW_NUMBER() OVER( ORDER BY N.Nationality) RowNum,R.UserName, R.Gender, A.StartAge || "-" || A.EndAge, N.Nationality '
                'FROM Rider AS R, AgeGroup AS A, Participant AS P, Nationality AS N '
                'WHERE P.SeriesId = ? '
                'AND R.Id = P.RiderId '
