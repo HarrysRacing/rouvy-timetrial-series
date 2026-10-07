@@ -47,6 +47,23 @@ try:
            # get the startlist data
            startList = get_rouvy_race_start_list(accessToken,eventId)
 
+
+           # *** DEBUG Code - Start ***
+           start_dt = datetime.fromisoformat(race[2])
+           ten_mins_before = -620 # in seconds
+           forty_mins_after = 2420 # in seconds
+
+           time_diff_secs = (datetime.now(timezone.utc) - start_dt).total_seconds()
+
+           if (time_diff_secs >= (ten_mins_before)) and (time_diff_secs < forty_mins_after):
+             #print('time diff secs: ',time_diff_secs,' race start : ',start_dt)
+             print('Startlist for race: ',race[0],' Race Start: ',race[2],' UTC Time Now: ', datetime.now(timezone.utc))            
+             for rider in startList["startlist"]:        
+                print('rider... ',rider["username"])
+            
+           # *** DEBUG Code - End ***
+            
+            
            #  "startlist": 
            #      "userId": "string",
            #      "username": "string",
