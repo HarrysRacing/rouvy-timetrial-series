@@ -99,7 +99,8 @@ def get_rouvy_race_start_list(access_token, event_id):
     try:
   
        #build ROUVY API EVent URL
-       ROUVY_API_EVENT_URL = ROUVY_API_EVENT + event_id + '/startlist?limit=100&offset=0' 
+       #ROUVY_API_EVENT_URL = ROUVY_API_EVENT + event_id + '/startlist?limit=100&offset=0' 
+       ROUVY_API_EVENT_URL = ROUVY_API_EVENT + event_id + '/startlist' 
        
        event_response = requests.get(ROUVY_API_EVENT_URL,headers={"Authorization": f"Bearer {access_token}"} )
     

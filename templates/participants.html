@@ -26,8 +26,9 @@
       The table below lists all riders who have entered (through ROUVY) a race scheduled for <i><strong>{{name}}</strong></i>:
     </p>
 
-    <table  class="compact-table">
-	<tr>
+	<div class="table-wrapper">
+    <table class="compact-table">
+    <tr>
 	<th>#</th>
     <th>ROUVY Name</th>
     <th>Gender</th>
@@ -35,7 +36,7 @@
 	<th>Nationality</th>		
     </tr>
     {% for item in participants_tbl %}  
-    <tr class="table_std_row">
+    <tr>
        <td>{{item[0]}}</td>
        <td>{{item[1]}}</td>       
 	   <td>{{item[2]}}</td>       
@@ -44,7 +45,7 @@
     </tr>
     {% endfor %}
 	</table>
-		
+	</div>	
     <p><strong><a href="{{ url_for('home') }}" class="links">Go to Home page</a></strong></p>
 
       </section>

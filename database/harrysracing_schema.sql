@@ -329,6 +329,7 @@ VALUES
     ('OM','Oman', 'Omani'),
     ('PK','Pakisthan', 'Pakistani'),
     ('PW','Palau', 'Palauan'),
+	('PS','Palestine', 'Palestinian'),
     ('PA','Panama', 'Panamanian'),
     ('PG','Papa New Guinea', 'Papua New Guinean'),
     ('PY','Paraguy', 'Paraguayan'),
