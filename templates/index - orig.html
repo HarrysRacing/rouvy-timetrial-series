@@ -1,0 +1,229 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Harrys Racing Series</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Massively CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}"  />
+  <noscript><link rel="stylesheet" href="{{ url_for('static', filename='css/noscript.css') }}" /></noscript>
+</head>
+
+<body class="is-preload">
+  
+  <!-- Wrapper -->
+  <div id="wrapper" class="fade-in">
+
+    <!-- Intro / Hero -->
+     
+    <div id="intro">
+      <ul class="actions">
+        <li><a href="#main" class="button icon solid solo fa-arrow-down scrolly">Scroll Down</a></li>
+      </ul>
+    </div>
+
+    <!-- Header -->
+
+    <header id="header">
+
+  <div class="site-branding">
+
+    <img src="{{ url_for('static', filename='images/HRlogo.png') }}" 
+         alt="Harrys Racing Logo"
+         class="site-logo" />
+
+    <div class="site-title">
+      <h1>Harrys Racing Series</h1>
+      <p>Community Indoor Cycling Competition</p>
+    </div>
+
+  </div>
+
+</header>
+
+    <!-- Nav -->
+    <nav id="nav">
+      <ul class="links">
+        <li class="active"><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('guide') }}">Guidelines</a></li>
+        <li><a href="{{ url_for('terms') }}">Terms</a></li>
+        <li><a href="{{ url_for('privacy') }}">Privacy</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main -->
+    <div id="main">
+
+      <!-- About -->
+      <section class="post">
+        <header class="major">
+          <h3>Current Race Series</h3>
+		  
+		  <h2>{{ name }}</h2>
+		</header>
+		
+        <!-- temp comment out ready for next series
+		<ul>
+		   <li><i><strong>{{name}}</strong></i> runs from <b>{{start_date}}</b> until <b>{{end_date}}</b>.</li>
+		   <li><b>The best {{counting_stages}} stages raced</b> will be awarded points that count towards the overall General Classification.</li>
+		   <li><b>Race the same Stage as many times as you choose and <i>only your best time will count!</i></b></li>
+		</ul>
+	    -->
+		
+		<ul>
+		   <li><i><strong>*** CONGRATULATIONS jyrkip on taking the overall Series win!!! ***</strong></i></li>
+		   <li><i><strong>And THANK YOU to everyone who raced making Harrys Racing TT Series the fun it was.</strong></i></li>
+		   <li><b>The next Series will start in December 2026.</b></li>
+		   <li><b>(You can expect some routes with more climbing and possibly a little longer.)</i></b></li>
+		   <li><b>If you have route requests or suggestions for race times? Please do join the ROUVY Community and leave a comment!</i></b></li>
+		</ul>
+		
+		
+		   <b>Comments or Suggestions?</b>  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Join the discussion on <i><b><a href="https://riders.rouvy.com/social/communities/bf28346e-e6fc-4e35-b7d4-0a43b950c96a" class="links">Harrys Racing ROUVY Community</a></b></i></p>
+
+      <section class="posts">
+        <article>
+          <header>
+            <h3>Stages</h3>
+          </header>
+          <p>
+            <i><strong>{{name}}</strong></i> consists of the following Stages:
+          </p>
+		  <div class="table-wrapper">
+             <table class="compact-table">
+	         <tr>
+                <th>Stage Name</th>
+                <th>ROUVY Route</th>
+			    <th>Start Date</th>
+			    <th>End Date</th>
+		        <th>Location</th>
+		        <th>Distance(kms)</th>
+		        <th>Ascent(m)</th>
+				<th>Status</th>
+             </tr>
+             {% for item in stage_tbl %}  
+             <tr class="{{ item[9] }}">
+                <td>
+                   {% if item[9] == "Complete" %}
+                      <a href="{{ url_for('stage_results', stageId=item[7], stageName=item[0]) }}" class="links">
+                        {{ item[0] }}
+                      </a>
+				   {% elif item[9] == "In-progress" %}
+                      <a href="{{ url_for('stage_results_races', stageId=item[7], stageName=item[0]) }}" class="links">
+                        {{ item[0] }}
+                      </a>
+                   {% else %}
+                      <a href="{{ url_for('stage_races', stageId=item[7], stageName=item[0]) }}" class="links">
+                        {{ item[0] }}
+                      </a>
+                   {% endif %}
+                </td>
+			    <td>    
+                   <a href="https://riders.rouvy.com/route/{{ item[8] }}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="links">
+                     {{ item[1] }}
+				     <i class="icon solid fa-external-link-alt"></i>
+                   </a>
+			    </td>
+                <td>{{item[2]}}</td>
+	            <td>{{item[3]}}</td>       
+	            <td>{{item[4]}}</td>       
+	            <td>{{item[5]}}</td>
+	            <td>{{item[6]}}</td> 
+                <td>{{item[9]}}</td>				
+             </tr>
+             {% endfor %}
+	         </table>
+		 </div><br>
+        </article>
+		
+        <article>
+          <header>
+            <h3>GC Standings</h3>
+          </header>
+          <p>
+            Current Top Ten GC Standings :
+          </p>
+		  <div class="table-wrapper">
+		     <table  class="compact-table">
+	            <tr>
+                   <th>GC Position</th>
+			       <th>Rider</th>
+			       <th>Gender</th>
+		           <th>Nationality</th>
+		           <th>Age Group</th>
+		           <th>Counting Stages</th>
+			       <th>Points</th>
+                </tr>
+                {% for item in gc_tbl %}  
+                <tr>
+                   <td>{{item[0]}}</td>
+                   <td>{{item[1]}}</td>
+	               <td>{{item[2]}}</td>       
+	               <td>{{item[3]}}</td>       
+	               <td>{{item[4]}}</td>
+	               <td>{{item[5]}}</td>       
+	               <td>{{item[6]}}</td>
+                </tr>
+                {% endfor %}
+	         </table>
+		  </div><br>
+        </article>
+        
+		{% if name != "None" %}
+        <article>		
+		  <ul class="actions">
+		     <li><a href="{{ url_for('gc') }}" class="button">Current GC (Full)</a></li>
+		     <li><a href="{{ url_for('stages') }}" class="button">Stages</a></li>
+		     <li><a href="{{ url_for('all_races') }}" class="button">Scheduled Races</a></li>
+             <li><a href="{{ url_for('participants') }}" class="button">Riders List</a></li>
+          </ul>
+        </article>
+        {% endif %}
+      </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <section>
+        <h3>Legal</h3>
+        <p style="text-align: left;">
+          Harrys Racing Series is an independent community project
+		  utilizing data accessed via the ROUVY API.
+        </p>
+      </section>
+	  
+      <section>
+        <h3>Contact</h3>
+        <p style="text-align: left;">
+          For project enquiries
+		  please contact:<br> 
+          harrysracing@altmail.kr
+        </p>
+      </section>
+    </footer>
+
+    <!-- Copyright -->
+    <div id="copyright">
+      <ul><li>&copy; Harrys Racing Series</li></ul>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.scrollex.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.scrolly.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/browser.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/breakpoints.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/util.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+ 
+</body>
+</html>

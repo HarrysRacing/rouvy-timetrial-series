@@ -331,6 +331,14 @@ def get_participants_list():
       results = cur.fetchall()
    return results
 
+def get_past_series():
+   with sqlite3.connect(DB_PATH) as conn:
+      cur = conn.cursor()
+      query = 'SELECT Id, Name, date(StartDate), date(EndDate) FROM Series WHERE julianday(EndDate) <= julianday("now");'
+      cur.execute(query)
+      seriesInfo = cur.fetchall()
+   return seriesInfo
+
 def get_points_list():
    with sqlite3.connect(DB_PATH) as conn:
       cur = conn.cursor()
@@ -363,19 +371,16 @@ def get_races_list(stageId):
       results = cur.fetchall()
    return results 
  
-def get_stages_info():
+def get_stages_info(seriesId):
    with sqlite3.connect(DB_PATH) as conn:
       cur = conn.cursor() 
 
       query = ('SELECT Name, RouteName, date(StartDate), date(EndDate), Country, ROUND(Distance,2), Ascent, Id, RouteId '
                'FROM Stage '
-               'WHERE SeriesId IN (SELECT Id '
-               '                    FROM Series '
-               '                    WHERE julianday(StartDate) <= julianday("now") '
-               '                    AND julianday(EndDate) > julianday("now")) '
+               'WHERE SeriesId = ? '
                'ORDER BY Id;' 
                ) 
-      cur.execute(query)
+      cur.execute(query,(seriesId,))
       results = cur.fetchall()
    return results   
 

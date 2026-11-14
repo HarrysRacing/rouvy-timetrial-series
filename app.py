@@ -5,7 +5,7 @@ from flask import Flask, render_template, redirect, request, logging
 from datetime import datetime, timedelta
 
 #import function to retrieve active series data
-from services.db_utils import get_points_list, get_participants_list, get_races_list, get_active_series, get_stages_info, get_stage_results, get_full_gc_info, get_top_ten_gc_info, save_rider_auth, DatabaseError
+from services.db_utils import get_points_list, get_participants_list, get_races_list, get_active_series, get_past_series, get_stages_info, get_stage_results, get_full_gc_info, get_top_ten_gc_info, save_rider_auth, DatabaseError
 from services.rouvy_oauth import get_oauth_url, get_token, RouvyOAuthError
 from services.rouvy_api import get_rouvy_rider,  RouvyAPIError
 
@@ -33,8 +33,10 @@ def all_races():
     stageName = request.args.get("stageName")
 
     series_info = get_active_series()
- 
-    stages_info = get_stages_info()
+    
+    seriesId = series_info[0]
+           
+    stages_info = get_stages_info(seriesId)
     
     stage_list = []
     
@@ -126,11 +128,18 @@ def all_races():
 
 @app.route("/gc")
 def gc():
-    series_info = get_active_series()
     
-    gc_info = get_full_gc_info(series_info[0])
+    seriesId = request.args.get("seriesId")
+    seriesName = request.args.get("seriesName")
     
-    return render_template("gc.html",series_name=series_info[1], counting_stages=series_info[4], gc_tbl=gc_info)
+    if not seriesId:    
+        series_info = get_active_series()
+        seriesId = series_info[0]
+        seriesName = series_info[1]
+    
+    gc_info = get_full_gc_info(seriesId)
+    
+    return render_template("gc.html",series_name=seriesName, gc_tbl=gc_info)
 
 @app.route("/guide")
 def guide():
@@ -141,12 +150,13 @@ def home():
     series_info = get_active_series()
 
     if series_info:
+        
+       seriesId = series_info[0]
+       
        #stages_info : Name, RouteName, StartDate, EndDate, Country, Distance, Ascent, Id, RouteId
-       stages_info = get_stages_info()
+       stages_info = get_stages_info(seriesId)
     
        gc_info = get_top_ten_gc_info(series_info[0])
-
-       print('gc top ten: ',gc_info)
        
        # Parse the ISO 8601 date
        start_dt = datetime.fromisoformat(series_info[2])
@@ -199,7 +209,7 @@ def home():
         
         
     
-    return render_template("index.html", name=series_info[1], start_date=start_dt_fmt,end_date=end_dt_fmt,
+    return render_template("index.html", series_id=series_info[0], series_name=series_info[1], start_date=start_dt_fmt,end_date=end_dt_fmt,
                             counting_stages=series_info[4], stage_tbl=stage_list, gc_tbl=gc_info)
     
 # there are no links to this from the webpage, so just here to address a manual entry in browser with index url
@@ -214,7 +224,35 @@ def participants():
     participants_list = get_participants_list()
     
     return render_template("participants.html", name=series_info[1], participants_tbl=participants_list)
+ 
+@app.route("/past_series")
+def past_series():
+    series_info = get_past_series()
     
+    series_list = []
+    
+    for row in series_info:
+         
+         # Parse the ISO 8601 date
+         seriesS_dt = datetime.fromisoformat(row[2])
+         seriesE_dt = datetime.fromisoformat(row[3])
+    
+         li = list(row)
+         
+         # Format to dd-mmm-yyyy
+         li[2] = seriesS_dt.strftime('%d-%b-%Y')
+         li[3] = seriesE_dt.strftime('%d-%b-%Y')
+         
+         today = datetime.now().date()
+         
+         series_end = seriesE_dt.date()
+         series_start = seriesS_dt.date()
+         
+         row = tuple(li)
+         
+         series_list.append(row)       
+    return render_template("past_series.html", series_tbl=series_list)
+ 
 @app.route("/points")
 def points():
     series_info = get_active_series()
@@ -262,10 +300,17 @@ def stage_races():
 
 @app.route("/stages")
 def stages():
-    series_info = get_active_series()
+    
+    seriesId = request.args.get("seriesId")
+    seriesName = request.args.get("seriesName")
+    
+    if not seriesId:    
+        series_info = get_active_series()
+        seriesId = series_info[0]
+        seriesName = series_info[1]
     
     #stages_info : Name, RouteName, StartDate, EndDate, Country, Distance, Ascent, Id, RouteId
-    stages_info = get_stages_info()
+    stages_info = get_stages_info(seriesId)
     
     stage_list = []
     
@@ -300,16 +345,17 @@ def stages():
          
          stage_list.append(row)         
     
-    return render_template("stages.html", series_name=series_info[1], stage_tbl=stage_list)
+    return render_template("stages.html", series_name=seriesName, stage_tbl=stage_list)
 
 @app.route("/stage_results")
 def stage_results():
 
     # stageId and stageName passed in as commandline arguments in index.html, when calling rouvy_races.html
+    seriesName = request.args.get("seriesName")
     stageId = request.args.get("stageId")
     stageName = request.args.get("stageName")
     
-    series_info = get_active_series()
+    #series_info = get_active_series()
     
     stage_results = get_stage_results(stageId)
     
@@ -335,7 +381,7 @@ def stage_results():
          
        stage_list.append(row)
    
-    return render_template("stage_results.html", series_name=series_info[1], stage_name=stageName, results_tbl=stage_list)
+    return render_template("stage_results.html", series_name=seriesName, stage_name=stageName, results_tbl=stage_list)
  
 @app.route("/stage_results_races")
 def stage_results_races():

@@ -41,7 +41,7 @@
           <tr class="{{ item[9] }}">
              <td>
                 {% if item[9] == "Complete" %}
-                   <a href="{{ url_for('stage_results', stageId=item[7], stageName=item[0]) }}" class="links">
+                   <a href="{{ url_for('stage_results', seriesName=series_name, stageId=item[7], stageName=item[0]) }}" class="links">
                      {{ item[0] }}
                    </a>
 				{% elif item[9] == "In-progress" %}

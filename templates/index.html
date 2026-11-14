@@ -60,9 +60,12 @@
       <!-- About -->
       <section class="post">
         <header class="major">
-          <h3>Current Race Series</h3>
+          <!---- temp comment out
+		  <h3>Current Race Series</h3>
 		  
-		  <h2>{{ name }}</h2>
+		  <h2>{{ series_name }}</h2>
+		  ---->
+		  <h3>*** Series Results now available at bottom of page ***</h3>
 		</header>
 		
         <!-- temp comment out ready for next series
@@ -72,9 +75,9 @@
 		   <li><b>Race the same Stage as many times as you choose and <i>only your best time will count!</i></b></li>
 		</ul>
 	    -->
-		
+
+        <h2><i>*** CONGRATULATIONS jyrkip on taking the overall Series win!!! ***</i></h2><br>
 		<ul>
-		   <li><i><strong>*** CONGRATULATIONS jyrkip on taking the overall Series win!!! ***</strong></i></li>
 		   <li><i><strong>And THANK YOU to everyone who raced making Harrys Racing TT Series the fun it was.</strong></i></li>
 		   <li><b>The next Series will start in December 2026.</b></li>
 		   <li><b>(You can expect some routes with more climbing and possibly a little longer.)</i></b></li>
@@ -90,7 +93,7 @@
             <h3>Stages</h3>
           </header>
           <p>
-            <i><strong>{{name}}</strong></i> consists of the following Stages:
+            <i><strong>{{series_name}}</strong></i> consists of the following Stages:
           </p>
 		  <div class="table-wrapper">
              <table class="compact-table">
@@ -175,16 +178,20 @@
 		  </div><br>
         </article>
         
-		{% if name != "None" %}
+
         <article>		
 		  <ul class="actions">
+		    {% if series_name != "None" %}		  
 		     <li><a href="{{ url_for('gc') }}" class="button">Current GC (Full)</a></li>
-		     <li><a href="{{ url_for('stages') }}" class="button">Stages</a></li>
+		     <li><a href="{{ url_for('stages', seriesId=series_id, seriesName=series_name) }}" class="button">Stages</a></li>
 		     <li><a href="{{ url_for('all_races') }}" class="button">Scheduled Races</a></li>
              <li><a href="{{ url_for('participants') }}" class="button">Riders List</a></li>
+            {% endif %}	
+             <li><a href="{{ url_for('past_series') }}" class="button">Past Series Results</a></li>			
           </ul>
         </article>
-        {% endif %}
+
+		
       </section>
 
     </div>
